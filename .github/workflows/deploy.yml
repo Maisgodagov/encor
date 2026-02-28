@@ -56,7 +56,7 @@ jobs:
             fi
 
             cd /var/www/encor/frontend
-            npm ci
+            npm install --no-audit --no-fund --prefer-offline
             npm run build
             pm2 startOrReload ecosystem.config.cjs --env production
             pm2 save

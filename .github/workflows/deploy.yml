@@ -24,14 +24,19 @@ jobs:
           node-version: "22"
           cache: "npm"
 
+      - name: Cache node_modules
+        id: cache-node-modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-frontend-node-modules-${{ hashFiles('package-lock.json') }}
+
       - name: Install dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Build
         run: npm run build
-
-      - name: Prune dev dependencies
-        run: npm prune --omit=dev
 
       - name: Ensure deploy dir exists
         uses: appleboy/ssh-action@v1.2.2
@@ -51,9 +56,8 @@ jobs:
           username: ${{ secrets.VM_USER }}
           password: ${{ secrets.VM_PASSWORD }}
           port: 22
-          source: "package.json,package-lock.json,next.config.ts,public,.next,node_modules,ecosystem.config.cjs"
+          source: "package.json,package-lock.json,next.config.ts,public,.next,ecosystem.config.cjs"
           target: "/var/www/encor/frontend"
-          rm: true
 
       - name: Restart with PM2
         uses: appleboy/ssh-action@v1.2.2
@@ -65,5 +69,9 @@ jobs:
           script: |
             set -e
             cd /var/www/encor/frontend
+            if [ ! -d node_modules ] || [ ! -f .package-lock.sha256 ] || ! sha256sum -c .package-lock.sha256 >/dev/null 2>&1; then
+              npm ci --omit=dev --no-audit --no-fund
+              sha256sum package-lock.json > .package-lock.sha256
+            fi
             pm2 startOrReload ecosystem.config.cjs --env production
             pm2 save

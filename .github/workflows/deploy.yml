@@ -18,6 +18,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Prune dev dependencies
+        run: npm prune --omit=dev
+
       - name: Ensure deploy dir exists
         uses: appleboy/ssh-action@v1.2.2
         with:
@@ -36,11 +51,11 @@ jobs:
           username: ${{ secrets.VM_USER }}
           password: ${{ secrets.VM_PASSWORD }}
           port: 22
-          source: "package.json,package-lock.json,next.config.ts,tsconfig.json,src,public,ecosystem.config.cjs"
+          source: "package.json,package-lock.json,next.config.ts,public,.next,node_modules,ecosystem.config.cjs"
           target: "/var/www/encor/frontend"
           rm: true
 
-      - name: Build and restart with PM2
+      - name: Restart with PM2
         uses: appleboy/ssh-action@v1.2.2
         with:
           host: ${{ secrets.VM_HOST }}
@@ -49,14 +64,6 @@ jobs:
           port: 22
           script: |
             set -e
-            export NVM_DIR="$HOME/.nvm"
-            if [ -s "$NVM_DIR/nvm.sh" ]; then
-              . "$NVM_DIR/nvm.sh"
-              nvm use --lts >/dev/null 2>&1 || true
-            fi
-
             cd /var/www/encor/frontend
-            npm install --no-audit --no-fund --prefer-offline
-            npm run build
             pm2 startOrReload ecosystem.config.cjs --env production
             pm2 save

@@ -15,21 +15,21 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Encor",
-    template: "%s | Encor",
+    default: "Энкор",
+    template: "%s | Энкор",
   },
-  description: "Landing page for Encor with lead form and SEO optimization.",
+  description: "Официальный сайт Энкор.",
   metadataBase: new URL("https://encor-krd.ru"),
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Encor",
-    description: "Landing page for Encor with lead form and SEO optimization.",
+    title: "Энкор",
+    description: "Официальный сайт Энкор.",
     type: "website",
     locale: "ru_RU",
     url: "https://encor-krd.ru",
-    siteName: "Encor",
+    siteName: "Энкор",
   },
 };
 

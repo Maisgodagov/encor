@@ -40,8 +40,9 @@
 .intro h1 {
   max-width: 320px;
   font-size: 40px;
-  font-weight: 600;
   line-height: 48px;
+  font-weight: 600;
+
   letter-spacing: -2.4px;
   text-wrap: balance;
   color: var(--text-primary);

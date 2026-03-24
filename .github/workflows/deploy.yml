@@ -40,6 +40,9 @@ jobs:
           NEXT_PUBLIC_API_BASE_URL: https://encor-krd.ru
         run: npm run build
 
+      - name: Remove Next build cache before upload
+        run: rm -rf .next/cache
+
       - name: Ensure deploy dir exists
         uses: appleboy/ssh-action@v1.2.2
         with:

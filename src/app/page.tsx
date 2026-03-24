@@ -818,7 +818,9 @@ const LeadPrice = styled.strong<{ $isFallback?: boolean }>`
   margin-top: 0;
   color: #1f2d46;
   font-size: ${(props) =>
-    props.$isFallback ? "clamp(16px, 1.9vw, 22px)" : "clamp(24px, 2.8vw, 32px)"};
+    props.$isFallback
+      ? "clamp(16px, 1.9vw, 22px)"
+      : "clamp(24px, 2.8vw, 32px)"};
   line-height: 1;
   letter-spacing: -0.01em;
 `;
@@ -1014,7 +1016,8 @@ export default function Home() {
     setIsLeadSubmitting(true);
 
     try {
-      const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:4000";
+      const apiBaseUrl =
+        process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:4000";
       const response = await fetch(`${apiBaseUrl}/api/applications`, {
         method: "POST",
         headers: {
@@ -1169,15 +1172,17 @@ export default function Home() {
             <Bolt $pos="br" />
             <CalcTitle>Рассчитать стоимость</CalcTitle>
             <CalcBody>
-              <PriceCalculator showResult={false} onStateChange={setCalcState} />
-              <LeadForm
-                id="lead-form"
-                onSubmit={handleLeadSubmit}
-              >
+              <PriceCalculator
+                showResult={false}
+                onStateChange={setCalcState}
+              />
+              <LeadForm id="lead-form" onSubmit={handleLeadSubmit}>
                 <LeadPriceCard>
                   <LeadPriceLabel>Ориентировочная стоимость</LeadPriceLabel>
                   <LeadPrice
-                    $isFallback={calcState.resultText === "Нужен индивидуальный расчет"}
+                    $isFallback={
+                      calcState.resultText === "Нужен индивидуальный расчет"
+                    }
                   >
                     {calcState.resultText}
                   </LeadPrice>
@@ -1212,8 +1217,8 @@ export default function Home() {
                   <LeadHintIcon>
                     <HiOutlineInformationCircle />
                   </LeadHintIcon>
-                  Расчет ориентировочный. Точную смету формируем после осмотра объекта и
-                  уточнения состава работ.
+                  Расчет ориентировочный. Точную смету формируем после осмотра
+                  объекта и уточнения состава работ.
                 </LeadHint>
                 {isLeadSent && (
                   <LeadSuccess>
@@ -1257,7 +1262,7 @@ export default function Home() {
                 </div>
                 <div>
                   <ContactsItemTitle>Электронная почта</ContactsItemTitle>
-                  <ContactsItemValue>info@encor-krd.ru</ContactsItemValue>
+                  <ContactsItemValue>infso@encor-krd.ru</ContactsItemValue>
                 </div>
                 <div>
                   <ContactsItemTitle>Город</ContactsItemTitle>

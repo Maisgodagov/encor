@@ -1,7 +1,16 @@
-﻿import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import StyledComponentsRegistry from "@/lib/styled-components-registry";
+import {
+  ogImageUrl,
+  seoDescription,
+  seoJsonLd,
+  seoKeywords,
+  seoTitle,
+  siteName,
+  siteUrl,
+} from "@/lib/seo";
 
 const mulish = localFont({
   src: [
@@ -15,49 +24,87 @@ const mulish = localFont({
   display: "swap",
 });
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#f1f1f1",
+  colorScheme: "light",
+};
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
-    default: "Энкор - электромонтаж в Краснодаре",
+    default: seoTitle,
     template: "%s | Энкор",
   },
-  description:
-    "Электромонтаж в Краснодаре: квартиры, дома, частные дома, новостройки. Проводка, электрощит, проект, расчет нагрузок, штробление.",
-  keywords: [
-    "электромонтаж Краснодар",
-    "электрик Краснодар",
-    "электромонтаж в квартире Краснодар",
-    "электромонтаж в частном доме Краснодар",
-    "прокладка проводки Краснодар",
-    "сборка электрощита Краснодар",
-    "штробление под проводку Краснодар",
-  ],
-  metadataBase: new URL("https://encor-krd.ru"),
+  description: seoDescription,
+  applicationName: siteName,
+  keywords: seoKeywords,
+  authors: [{ name: siteName, url: siteUrl }],
+  creator: siteName,
+  publisher: siteName,
+  category: "home services",
+  classification: "Электромонтажные работы в Краснодаре",
+  referrer: "origin-when-cross-origin",
+  alternates: {
+    canonical: siteUrl,
+    languages: {
+      "ru-RU": siteUrl,
+    },
+  },
+  verification: {
+    google: "_jVZ1ZrHPHIi3QEbwVpZWu9xOru0I2OLaHeFrISh-X8",
+  },
+  manifest: "/manifest.webmanifest",
   icons: {
-    icon: [{ url: "/logo.svg", type: "image/svg+xml" }],
+    icon: [
+      { url: "/logo.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
     shortcut: [{ url: "/logo.svg", type: "image/svg+xml" }],
     apple: [{ url: "/logo.svg", type: "image/svg+xml" }],
-  },
-  alternates: {
-    canonical: "/",
   },
   robots: {
     index: true,
     follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      noimageindex: false,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
   openGraph: {
-    title: "Энкор - электромонтаж в Краснодаре",
-    description:
-      "Электромонтажные работы под ключ в Краснодаре: проводка, электрощит, проект и расчет нагрузок.",
     type: "website",
     locale: "ru_RU",
-    url: "https://encor-krd.ru",
-    siteName: "Энкор",
+    url: siteUrl,
+    siteName,
+    title: seoTitle,
+    description: seoDescription,
+    countryName: "Россия",
+    images: [
+      {
+        url: ogImageUrl,
+        width: 1200,
+        height: 630,
+        alt: "Электромонтаж в Краснодаре от Энкор",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Энкор - электромонтаж в Краснодаре",
-    description:
-      "Электромонтажные работы под ключ в Краснодаре: проводка, электрощит, проект и расчет нагрузок.",
+    title: seoTitle,
+    description: seoDescription,
+    images: [ogImageUrl],
+  },
+  other: {
+    "geo.region": "RU-KDA",
+    "geo.placename": "Краснодар",
+    "geo.position": "45.035470;38.975313",
+    ICBM: "45.035470, 38.975313",
   },
 };
 
@@ -69,7 +116,16 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <body className={mulish.variable} suppressHydrationWarning>
-        <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+        <StyledComponentsRegistry>
+          {seoJsonLd.map((item, index) => (
+            <script
+              key={`seo-jsonld-${index}`}
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{ __html: JSON.stringify(item) }}
+            />
+          ))}
+          {children}
+        </StyledComponentsRegistry>
       </body>
     </html>
   );

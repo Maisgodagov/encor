@@ -133,17 +133,6 @@ const serviceCards: ServiceCard[] = [
   },
 ];
 
-const localBusinessLd = {
-  "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  name: "Энкор",
-  description:
-    "Электромонтаж в Краснодаре: квартиры, дома, новостройки. Проводка, электрощит, проект, расчет нагрузок.",
-  areaServed: "Краснодар",
-  url: "https://encor-krd.ru",
-  telephone: "+7-900-000-00-00",
-};
-
 const SHOW_SERVICE_DESCRIPTION = true;
 const initialServicesCount = 8;
 
@@ -1581,11 +1570,6 @@ export default function Home() {
 
   return (
     <Page>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessLd) }}
-      />
-
       <Header>
         <HeaderInner>
           <Brand href="#top">

@@ -1,0 +1,1005 @@
+import Image from "next/image";
+import PriceCalculator from "@/components/price-calculator";
+import PortfolioCarousel from "@/components/portfolio-carousel";
+import {
+  HiOutlineBriefcase,
+  HiOutlineChevronDown,
+  HiOutlineClock,
+  HiOutlineShieldCheck,
+} from "react-icons/hi2";
+import styled from "styled-components";
+
+type ServiceCard = {
+  title: string;
+  description: string;
+  details: string;
+  image?: string;
+};
+
+const serviceCards: ServiceCard[] = [
+  {
+    title: "Р СџРЎР‚Р С•Р ВµР С”РЎвЂљР Р…Р В°РЎРЏ Р Т‘Р С•Р С”РЎС“Р СР ВµР Р…РЎвЂљР В°РЎвЂ Р С‘РЎРЏ",
+    image: "/img/1.png",
+    description:
+      "Р В Р В°Р В·РЎР‚Р В°Р В±Р В°РЎвЂљРЎвЂ№Р Р†Р В°Р ВµР С Р С—РЎР‚Р С•Р ВµР С”РЎвЂљ РЎРЊР В»Р ВµР С”РЎвЂљРЎР‚Р С•Р СР С•Р Р…РЎвЂљР В°Р В¶Р В° Р С—Р С•Р Т‘ Р С•Р В±РЎР‰Р ВµР С”РЎвЂљ Р С‘ РЎРЊРЎвЂљР В°Р С—РЎвЂ№ РЎР‚Р В°Р В±Р С•РЎвЂљ.",
+    details:
+      "Р РЋРЎвЂ¦Р ВµР СРЎвЂ№, Р С–РЎР‚РЎС“Р С—Р С—РЎвЂ№ Р С‘ РЎвЂљР С•РЎвЂЎР С”Р С‘ Р С—Р С•Р Т‘Р С”Р В»РЎР‹РЎвЂЎР ВµР Р…Р С‘РЎРЏ РЎРѓ РЎС“РЎвЂЎР ВµРЎвЂљР С•Р С Р С—Р В»Р В°Р Р…Р С‘РЎР‚Р С•Р Р†Р С”Р С‘ Р С‘ Р В±РЎС“Р Т‘РЎС“РЎвЂ°Р С‘РЎвЂ¦ Р Р…Р В°Р С–РЎР‚РЎС“Р В·Р С•Р С”.",
+  },
+  {
+    title: "Р РЃРЎвЂљРЎР‚Р С•Р В±Р В»Р ВµР Р…Р С‘Р Вµ РЎРѓРЎвЂљР ВµР Р…",
+    image: "/img/8.png",
+    description: "Р вЂњР С•РЎвЂљР С•Р Р†Р С‘Р С РЎв‚¬РЎвЂљРЎР‚Р С•Р В±РЎвЂ№ Р С—Р С•Р Т‘ Р В»Р С‘Р Р…Р С‘Р С‘ РЎРѓ РЎС“РЎвЂЎР ВµРЎвЂљР С•Р С РЎРѓРЎвЂ¦Р ВµР СРЎвЂ№ Р С‘ РЎвЂЎР С‘РЎРѓРЎвЂљР С•Р Р†Р С•Р в„– Р С•РЎвЂљР Т‘Р ВµР В»Р С”Р С‘.",
+    details:
+      "Р РЃРЎвЂљРЎР‚Р С•Р В±Р С‘Р С Р С—Р С• Р С—РЎР‚Р С•Р ВµР С”РЎвЂљР Р…РЎвЂ№Р С РЎвЂљРЎР‚Р В°РЎРѓРЎРѓР В°Р С, Р В°Р С”Р С”РЎС“РЎР‚Р В°РЎвЂљР Р…Р С• Р С‘ РЎРѓ Р СР С‘Р Р…Р С‘Р СР В°Р В»РЎРЉР Р…РЎвЂ№Р С Р С—Р С•Р Р†РЎР‚Р ВµР В¶Р Т‘Р ВµР Р…Р С‘Р ВµР С Р С•РЎРѓР Р…Р С•Р Р†Р В°Р Р…Р С‘РЎРЏ.",
+  },
+  {
+    title: "Р Р€РЎРѓРЎвЂљРЎР‚Р С•Р в„–РЎРѓРЎвЂљР Р†Р С• Р С—РЎР‚Р С•РЎвЂ¦Р С•Р Т‘Р Р…РЎвЂ№РЎвЂ¦ Р С•РЎвЂљР Р†Р ВµРЎР‚РЎРѓРЎвЂљР С‘Р в„–",
+    image: "/img/9.png",
+    description: "Р вЂ™РЎвЂ№Р С—Р С•Р В»Р Р…РЎРЏР ВµР С РЎвЂљР ВµРЎвЂ¦Р Р…Р С•Р В»Р С•Р С–Р С‘РЎвЂЎР ВµРЎРѓР С”Р С‘Р Вµ Р С—РЎР‚Р С•РЎвЂ¦Р С•Р Т‘РЎвЂ№ Р Т‘Р В»РЎРЏ Р С”Р В°Р В±Р ВµР В»РЎРЉР Р…РЎвЂ№РЎвЂ¦ РЎвЂљРЎР‚Р В°РЎРѓРЎРѓ.",
+    details:
+      "Р вЂњР С•РЎвЂљР С•Р Р†Р С‘Р С Р С—РЎР‚Р С•РЎвЂ¦Р С•Р Т‘РЎвЂ№ Р С—Р С•Р Т‘ РЎвЂљРЎР‚Р В°РЎРѓРЎРѓРЎвЂ№ РЎРѓ Р В·Р В°РЎвЂ°Р С‘РЎвЂљР С•Р в„– Р С”РЎР‚Р С•Р СР С•Р С” Р С‘ Р В°Р С”Р С”РЎС“РЎР‚Р В°РЎвЂљР Р…Р С•Р в„– Р С–Р ВµРЎР‚Р СР ВµРЎвЂљР С‘Р В·Р В°РЎвЂ Р С‘Р ВµР в„–.",
+  },
+  {
+    title: "Р СљР С•Р Р…РЎвЂљР В°Р В¶ РЎРЊР В»Р ВµР С”РЎвЂљРЎР‚Р С•РЎС“РЎРѓРЎвЂљР В°Р Р…Р С•Р Р†Р С”Р С‘",
+    image: "/img/10.png",
+    description: "Р СљР С•Р Р…РЎвЂљР С‘РЎР‚РЎС“Р ВµР С Р С‘ Р С—Р С•Р Т‘Р С”Р В»РЎР‹РЎвЂЎР В°Р ВµР С Р С”Р С•Р Р…Р ВµРЎвЂЎР Р…РЎвЂ№Р Вµ РЎвЂљР С•РЎвЂЎР С”Р С‘ РЎРЊР В»Р ВµР С”РЎвЂљРЎР‚Р С•РЎС“РЎРѓРЎвЂљР В°Р Р…Р С•Р Р†Р С”Р С‘.",
+    details:
+      "Р СџР С•Р Т‘Р С”Р В»РЎР‹РЎвЂЎР В°Р ВµР С Р С”Р С•Р Р…Р ВµРЎвЂЎР Р…РЎвЂ№Р Вµ РЎвЂљР С•РЎвЂЎР С”Р С‘ Р С‘ Р С—РЎР‚Р С•Р Р†Р ВµРЎР‚РЎРЏР ВµР С Р С”Р В°Р В¶Р Т‘РЎС“РЎР‹ Р С–РЎР‚РЎС“Р С—Р С—РЎС“ Р С—Р ВµРЎР‚Р ВµР Т‘ РЎРѓР Т‘Р В°РЎвЂЎР ВµР в„– Р С•Р В±РЎР‰Р ВµР С”РЎвЂљР В°.",
+  },
+  {
+    title: "Р СћРЎвЂР С—Р В»РЎвЂ№Р в„– Р С—Р С•Р В»",
+    image: "/img/13.png",
+    description:
+      "Р СљР С•Р Р…РЎвЂљР С‘РЎР‚РЎС“Р ВµР С Р С‘ Р С—Р С•Р Т‘Р С”Р В»РЎР‹РЎвЂЎР В°Р ВµР С Р С”Р С•Р Р…РЎвЂљРЎС“РЎР‚РЎвЂ№ РЎвЂљР ВµР С—Р В»Р С•Р С–Р С• Р С—Р С•Р В»Р В° Р С‘ РЎвЂљР ВµРЎР‚Р СР С•РЎР‚Р ВµР С–РЎС“Р В»РЎРЏРЎвЂљР С•РЎР‚РЎвЂ№.",
+    details:
+      "Р СџР С•Р Т‘Р С”Р В»РЎР‹РЎвЂЎР В°Р ВµР С Р С”Р С•Р Р…РЎвЂљРЎС“РЎР‚РЎвЂ№ Р С‘ РЎвЂљР ВµРЎР‚Р СР С•РЎР‚Р ВµР С–РЎС“Р В»РЎРЏРЎвЂљР С•РЎР‚РЎвЂ№, РЎвЂљР ВµРЎРѓРЎвЂљР С‘РЎР‚РЎС“Р ВµР С Р Т‘Р В°РЎвЂљРЎвЂЎР С‘Р С”Р С‘ Р С‘ РЎР‚Р В°Р В±Р С•РЎвЂЎР С‘Р Вµ РЎР‚Р ВµР В¶Р С‘Р СРЎвЂ№.",
+  },
+  {
+    title: "Р С›РЎвЂ Р ВµР Р…Р С”Р В° Р СР С•РЎвЂ°Р Р…Р С•РЎРѓРЎвЂљР С‘ Р С•Р В±Р С•РЎР‚РЎС“Р Т‘Р С•Р Р†Р В°Р Р…Р С‘РЎРЏ Р С‘ Р С—Р С•Р Т‘Р В±Р С•РЎР‚ Р Р…Р С•Р СР С‘Р Р…Р В°Р В»Р С•Р Р† Р В°Р Р†РЎвЂљР С•Р СР В°РЎвЂљР С‘Р С”Р С‘",
+    image: "/img/2.png",
+    description: "Р СџР С•Р Т‘Р В±Р С‘РЎР‚Р В°Р ВµР С Р Р…Р С•Р СР С‘Р Р…Р В°Р В»РЎвЂ№ Р В·Р В°РЎвЂ°Р С‘РЎвЂљРЎвЂ№ Р С‘ Р Р…Р В°Р С–РЎР‚РЎС“Р В·Р С”Р С‘ РЎРѓР С•Р С–Р В»Р В°РЎРѓР Р…Р С• Р СџР Р€Р В­.",
+    details:
+      "Р В Р В°РЎРѓРЎРѓРЎвЂЎР С‘РЎвЂљРЎвЂ№Р Р†Р В°Р ВµР С Р С–РЎР‚РЎС“Р С—Р С—РЎвЂ№, Р С—Р С•Р Т‘Р В±Р С‘РЎР‚Р В°Р ВµР С Р В°Р Р†РЎвЂљР С•Р СР В°РЎвЂљРЎвЂ№ Р С‘ Р Р€Р вЂ”Р С› Р Т‘Р В»РЎРЏ РЎРѓРЎвЂљР В°Р В±Р С‘Р В»РЎРЉР Р…Р С•Р в„– Р С‘ Р В±Р ВµР В·Р С•Р С—Р В°РЎРѓР Р…Р С•Р в„– РЎР‚Р В°Р В±Р С•РЎвЂљРЎвЂ№.",
+  },
+  {
+    title: "Р РЋР В±Р С•РЎР‚Р С”Р В° РЎРЊР В»Р ВµРЎвЂљРЎР‚Р С•РЎвЂ°Р С‘РЎвЂљР С•Р Р†Р С•Р С–Р С• Р С•Р В±Р С•РЎР‚РЎС“Р Т‘Р С•Р Р†Р В°Р Р…Р С‘РЎРЏ",
+    image: "/img/3.png",
+    description: "Р РЋР С•Р В±Р С‘РЎР‚Р В°Р ВµР С РЎвЂ°Р С‘РЎвЂљР С•Р Р†Р С•Р Вµ Р С•Р В±Р С•РЎР‚РЎС“Р Т‘Р С•Р Р†Р В°Р Р…Р С‘Р Вµ РЎРѓ Р СР В°РЎР‚Р С”Р С‘РЎР‚Р С•Р Р†Р С”Р С•Р в„– Р С‘ Р В»Р С•Р С–Р С‘Р С”Р С•Р в„– Р С–РЎР‚РЎС“Р С—Р С—.",
+    details:
+      "Р РЋР С•Р В±Р С‘РЎР‚Р В°Р ВµР С Р С‘ РЎР‚Р В°РЎРѓР С”Р В»РЎР‹РЎвЂЎР В°Р ВµР С РЎвЂ°Р С‘РЎвЂљ РЎРѓ Р СР В°РЎР‚Р С”Р С‘РЎР‚Р С•Р Р†Р С”Р С•Р в„– Р С–РЎР‚РЎС“Р С—Р С— Р С‘ Р С—РЎР‚Р С•Р Р†Р ВµРЎР‚Р С”Р С•Р в„– Р С—Р С•Р Т‘ Р Р…Р В°Р С–РЎР‚РЎС“Р В·Р С”Р С•Р в„–.",
+  },
+  {
+    title: "Р СџРЎР‚Р С•Р С”Р В»Р В°Р Т‘Р С”Р В° Р С”Р В°Р В±Р ВµР В»РЎРЉР Р…Р С•-Р С—РЎР‚Р С•Р Р†Р С•Р Т‘Р Р…Р С‘Р С”Р С•Р Р†Р С•Р в„– Р С—РЎР‚Р С•Р Т‘РЎС“Р С”РЎвЂ Р С‘Р С‘",
+    image: "/img/4.png",
+    description: "Р СљР С•Р Р…РЎвЂљР С‘РЎР‚РЎС“Р ВµР С Р С”Р В°Р В±Р ВµР В»РЎРЉР Р…Р С•-Р С—РЎР‚Р С•Р Р†Р С•Р Т‘Р Р…Р С‘Р С”Р С•Р Р†РЎС“РЎР‹ Р С—РЎР‚Р С•Р Т‘РЎС“Р С”РЎвЂ Р С‘РЎР‹ Р С•РЎвЂљР С”РЎР‚РЎвЂ№РЎвЂљР С• Р С‘ РЎРѓР С”РЎР‚РЎвЂ№РЎвЂљР С•.",
+    details:
+      "Р СџРЎР‚Р С•Р С”Р В»Р В°Р Т‘РЎвЂ№Р Р†Р В°Р ВµР С РЎвЂљРЎР‚Р В°РЎРѓРЎРѓРЎвЂ№ Р С•РЎвЂљР С”РЎР‚РЎвЂ№РЎвЂљР С•, Р Р† Р С–Р С•РЎвЂћРЎР‚Р Вµ, Р СР ВµРЎвЂљР В°Р В»Р В»Р С•РЎР‚РЎС“Р С”Р В°Р Р†Р Вµ Р С‘Р В»Р С‘ Р Р† РЎв‚¬РЎвЂљРЎР‚Р С•Р В±Р Вµ Р С—Р С• Р С—РЎР‚Р С•Р ВµР С”РЎвЂљРЎС“.",
+  },
+  {
+    title: "Р Р€РЎРѓРЎвЂљР В°Р Р…Р С•Р Р†Р С”Р В° РЎР‚Р В°РЎРѓР С—РЎР‚Р ВµР Т‘Р ВµР В»Р С‘РЎвЂљР ВµР В»РЎРЉР Р…РЎвЂ№РЎвЂ¦ Р С”Р С•РЎР‚Р С•Р В±Р С•Р С”",
+    image: "/img/5.png",
+    description: "Р Р€РЎРѓРЎвЂљР В°Р Р…Р В°Р Р†Р В»Р С‘Р Р†Р В°Р ВµР С Р С”Р С•РЎР‚Р С•Р В±Р С”Р С‘ Р Р† РЎС“Р Т‘Р С•Р В±Р Р…РЎвЂ№РЎвЂ¦ Р С‘ РЎвЂљР ВµРЎвЂ¦Р Р…Р С‘РЎвЂЎР ВµРЎРѓР С”Р С‘ Р Р†Р ВµРЎР‚Р Р…РЎвЂ№РЎвЂ¦ РЎвЂљР С•РЎвЂЎР С”Р В°РЎвЂ¦.",
+    details:
+      "Р В Р В°Р В·Р СР ВµРЎвЂ°Р В°Р ВµР С Р С”Р С•РЎР‚Р С•Р В±Р С”Р С‘ Р Р† Р Т‘Р С•РЎРѓРЎвЂљРЎС“Р С—Р Р…РЎвЂ№РЎвЂ¦ Р СР ВµРЎРѓРЎвЂљР В°РЎвЂ¦ Р Т‘Р В»РЎРЏ РЎС“Р Т‘Р С•Р В±Р Р…Р С•Р С–Р С• Р С•Р В±РЎРѓР В»РЎС“Р В¶Р С‘Р Р†Р В°Р Р…Р С‘РЎРЏ Р С‘ Р Т‘Р С‘Р В°Р С–Р Р…Р С•РЎРѓРЎвЂљР С‘Р С”Р С‘.",
+  },
+
+  {
+    title: "Р Р€РЎРѓРЎвЂљРЎР‚Р С•Р в„–РЎРѓРЎвЂљР Р†Р С• Р С‘ Р СР С•Р Р…РЎвЂљР В°Р В¶ РЎС“РЎРѓРЎвЂљР В°Р Р…Р С•Р Р†Р С•РЎвЂЎР Р…РЎвЂ№РЎвЂ¦ Р С”Р С•РЎР‚Р С•Р В±Р С•Р С”",
+    image: "/img/7.png",
+    description: "Р РЋРЎвЂљР В°Р Р†Р С‘Р С Р С”Р С•РЎР‚Р С•Р В±Р С”Р С‘ Р Р† Р В±Р ВµРЎвЂљР С•Р Р…, Р С”Р С‘РЎР‚Р С—Р С‘РЎвЂЎ, Р С–Р В°Р В·Р С•Р В±Р В»Р С•Р С” Р С‘ Р С”Р С•Р Р…РЎРѓРЎвЂљРЎР‚РЎС“Р С”РЎвЂ Р С‘Р С‘ Р вЂњР С™Р вЂє.",
+    details:
+      "Р вЂ™РЎвЂ№РЎРѓРЎвЂљР В°Р Р†Р В»РЎРЏР ВµР С Р С–Р ВµР С•Р СР ВµРЎвЂљРЎР‚Р С‘РЎР‹ Р С—Р С•Р Т‘ РЎвЂЎР С‘РЎРѓРЎвЂљР С•Р Р†Р С•Р в„– Р СР С•Р Р…РЎвЂљР В°Р В¶ РЎР‚Р С•Р В·Р ВµРЎвЂљР С•Р С” Р С‘ Р Р†РЎвЂ№Р С”Р В»РЎР‹РЎвЂЎР В°РЎвЂљР ВµР В»Р ВµР в„– Р В±Р ВµР В· Р С—Р ВµРЎР‚Р ВµР С”Р С•РЎРѓР С•Р Р†.",
+  },
+
+  {
+    title: "Р СљР С•Р Р…РЎвЂљР В°Р В¶ Р С•РЎРѓР Р†Р ВµРЎвЂљР С‘РЎвЂљР ВµР В»РЎРЉР Р…Р С•Р С–Р С• Р С•Р В±Р С•РЎР‚РЎС“Р Т‘Р С•Р Р†Р В°Р Р…Р С‘РЎРЏ",
+    image: "/img/11.png",
+    description: "Р Р€РЎРѓРЎвЂљР В°Р Р…Р В°Р Р†Р В»Р С‘Р Р†Р В°Р ВµР С РЎРѓР Р†Р ВµРЎвЂљР С‘Р В»РЎРЉР Р…Р С‘Р С”Р С‘, Р С–РЎР‚РЎС“Р С—Р С—РЎвЂ№ Р С•РЎРѓР Р†Р ВµРЎвЂ°Р ВµР Р…Р С‘РЎРЏ Р С‘ РЎС“Р С—РЎР‚Р В°Р Р†Р В»Р ВµР Р…Р С‘Р Вµ.",
+    details:
+      "Р СљР С•Р Р…РЎвЂљР С‘РЎР‚РЎС“Р ВµР С РЎРѓР Р†Р ВµРЎвЂљР С‘Р В»РЎРЉР Р…Р С‘Р С”Р С‘ Р С‘ Р Р…Р В°РЎРѓРЎвЂљРЎР‚Р В°Р С‘Р Р†Р В°Р ВµР С РЎРѓРЎвЂ Р ВµР Р…Р В°РЎР‚Р С‘Р С‘ РЎС“Р С—РЎР‚Р В°Р Р†Р В»Р ВµР Р…Р С‘РЎРЏ Р С•РЎРѓР Р†Р ВµРЎвЂ°Р ВµР Р…Р С‘Р ВµР С.",
+  },
+  {
+    title: "Р СџР С•Р Т‘Р С”Р В»РЎР‹РЎвЂЎР ВµР Р…Р С‘Р Вµ Р В±РЎвЂ№РЎвЂљР С•Р Р†РЎвЂ№РЎвЂ¦ РЎРЊР В»Р ВµР С”РЎвЂљРЎР‚Р С•Р С—РЎР‚Р С‘Р В±Р С•РЎР‚Р С•Р Р†",
+    image: "/img/12.png",
+    description:
+      "Р СџР С•Р Т‘Р С”Р В»РЎР‹РЎвЂЎР В°Р ВµР С Р В±РЎвЂ№РЎвЂљР С•Р Р†РЎС“РЎР‹ РЎвЂљР ВµРЎвЂ¦Р Р…Р С‘Р С”РЎС“ РЎРѓ Р С—РЎР‚Р В°Р Р†Р С‘Р В»РЎРЉР Р…РЎвЂ№Р С РЎР‚Р В°РЎРѓР С—РЎР‚Р ВµР Т‘Р ВµР В»Р ВµР Р…Р С‘Р ВµР С Р В»Р С‘Р Р…Р С‘Р в„–.",
+    details:
+      "Р СџР С•Р Т‘Р С”Р В»РЎР‹РЎвЂЎР В°Р ВµР С РЎвЂљР ВµРЎвЂ¦Р Р…Р С‘Р С”РЎС“ Р Р…Р В° Р Р†РЎвЂ№Р Т‘Р ВµР В»Р ВµР Р…Р Р…РЎвЂ№Р Вµ Р В»Р С‘Р Р…Р С‘Р С‘ РЎРѓ РЎС“РЎвЂЎР ВµРЎвЂљР С•Р С Р Р…Р В°Р С–РЎР‚РЎС“Р В·Р С•Р С” Р С‘ Р В°Р Р†РЎвЂљР С•Р СР В°РЎвЂљР С‘Р С”Р С‘.",
+  },
+
+  {
+    title:
+      "Р СџР С•Р Т‘Р С”Р В»РЎР‹РЎвЂЎР ВµР Р…Р С‘Р Вµ Р С‘ Р Р…Р В°РЎРѓРЎвЂљРЎР‚Р С•Р в„–Р С”Р В° Р С•Р В±Р С•РЎР‚РЎС“Р Т‘Р С•Р Р†Р В°Р Р…Р С‘РЎРЏ РЎРѓР С—Р ВµРЎвЂ Р С‘Р В°Р В»РЎРЉР Р…Р С•Р С–Р С• Р Р…Р В°Р В·Р Р…Р В°РЎвЂЎР ВµР Р…Р С‘РЎРЏ (Р В°Р Р…РЎвЂљР С‘Р С—РЎР‚Р С•РЎвЂљР ВµРЎвЂЎР С”Р В°)",
+    image: "/img/14.png",
+    description:
+      "Р СџР С•Р Т‘Р С”Р В»РЎР‹РЎвЂЎР В°Р ВµР С Р С‘ Р Р…Р В°РЎРѓРЎвЂљРЎР‚Р В°Р С‘Р Р†Р В°Р ВµР С Р С•Р В±Р С•РЎР‚РЎС“Р Т‘Р С•Р Р†Р В°Р Р…Р С‘Р Вµ РЎРѓР С—Р ВµРЎвЂ Р С‘Р В°Р В»РЎРЉР Р…Р С•Р С–Р С• Р Р…Р В°Р В·Р Р…Р В°РЎвЂЎР ВµР Р…Р С‘РЎРЏ.",
+    details:
+      "Р ВР Р…РЎвЂљР ВµР С–РЎР‚Р С‘РЎР‚РЎС“Р ВµР С Р В°Р Р…РЎвЂљР С‘Р С—РЎР‚Р С•РЎвЂљР ВµРЎвЂЎР С”РЎС“ Р С‘ Р С—РЎР‚Р С•Р Р†Р ВµРЎР‚РЎРЏР ВµР С Р В°Р Р†Р В°РЎР‚Р С‘Р в„–Р Р…РЎвЂ№Р Вµ РЎРѓРЎвЂ Р ВµР Р…Р В°РЎР‚Р С‘Р С‘ РЎРѓРЎР‚Р В°Р В±Р В°РЎвЂљРЎвЂ№Р Р†Р В°Р Р…Р С‘РЎРЏ.",
+  },
+  {
+    title:
+      "Р РЋР С•Р ВµР Т‘Р С‘Р Р…Р ВµР Р…Р С‘Р Вµ Р С”Р В°Р В±Р ВµР В»РЎРЉР Р…Р С•-Р С—РЎР‚Р С•Р Р†Р С•Р Т‘Р Р…Р С‘Р С”Р С•Р Р†Р С•Р в„– Р С—РЎР‚Р С•Р Т‘РЎС“Р С”РЎвЂ Р С‘Р С‘ Р Р† РЎР‚Р В°РЎРѓР С—РЎР‚Р ВµР Т‘Р ВµР В»Р С‘РЎвЂљР ВµР В»РЎРЉР Р…РЎвЂ№РЎвЂ¦ Р С”Р С•РЎР‚Р С•Р В±Р С”Р В°РЎвЂ¦ Р СР ВµРЎвЂљР С•Р Т‘Р С•Р С РЎРѓР Р†Р В°РЎР‚Р С”Р С‘ Р В»Р С‘Р В±Р С• Р С–Р С‘Р В»РЎРЉР В·Р С•Р Р†Р В°Р Р…Р С‘РЎРЏ",
+    image: "/img/6.png",
+    description: "Р вЂ™РЎвЂ№Р С—Р С•Р В»Р Р…РЎРЏР ВµР С РЎРѓР С•Р ВµР Т‘Р С‘Р Р…Р ВµР Р…Р С‘РЎРЏ РЎРѓР Р†Р В°РЎР‚Р С”Р С•Р в„– Р С‘Р В»Р С‘ Р С–Р С‘Р В»РЎРЉР В·Р С•Р Р†Р В°Р Р…Р С‘Р ВµР С Р Р† Р С”Р С•РЎР‚Р С•Р В±Р С”Р В°РЎвЂ¦.",
+    details:
+      "Р вЂќР ВµР В»Р В°Р ВµР С Р Р…Р В°Р Т‘Р ВµР В¶Р Р…РЎвЂ№Р Вµ РЎРѓР С•Р ВµР Т‘Р С‘Р Р…Р ВµР Р…Р С‘РЎРЏ РЎРѓ Р С”Р С•Р Р…РЎвЂљРЎР‚Р С•Р В»Р ВµР С Р С”Р С•Р Р…РЎвЂљР В°Р С”РЎвЂљР В° Р С‘ Р С‘Р В·Р С•Р В»РЎРЏРЎвЂ Р С‘Р С‘ Р С”Р В°Р В¶Р Т‘Р С•Р в„– Р В»Р С‘Р Р…Р С‘Р С‘.",
+  },
+];
+
+const localBusinessLd = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: "Р В­Р Р…Р С”Р С•РЎР‚",
+  description:
+    "Р В­Р В»Р ВµР С”РЎвЂљРЎР‚Р С•Р СР С•Р Р…РЎвЂљР В°Р В¶ Р Р† Р С™РЎР‚Р В°РЎРѓР Р…Р С•Р Т‘Р В°РЎР‚Р Вµ: Р С”Р Р†Р В°РЎР‚РЎвЂљР С‘РЎР‚РЎвЂ№, Р Т‘Р С•Р СР В°, Р Р…Р С•Р Р†Р С•РЎРѓРЎвЂљРЎР‚Р С•Р в„–Р С”Р С‘. Р СџРЎР‚Р С•Р Р†Р С•Р Т‘Р С”Р В°, РЎРЊР В»Р ВµР С”РЎвЂљРЎР‚Р С•РЎвЂ°Р С‘РЎвЂљ, Р С—РЎР‚Р С•Р ВµР С”РЎвЂљ, РЎР‚Р В°РЎРѓРЎвЂЎР ВµРЎвЂљ Р Р…Р В°Р С–РЎР‚РЎС“Р В·Р С•Р С”.",
+  areaServed: "Р С™РЎР‚Р В°РЎРѓР Р…Р С•Р Т‘Р В°РЎР‚",
+  url: "https://encor-krd.ru",
+  telephone: "+7-900-000-00-00",
+};
+
+const SHOW_SERVICE_DESCRIPTION = true;
+
+const Page = styled.main`
+  background: #f1f1f1;
+`;
+
+const Container = styled.div`
+  width: min(1200px, 100%);
+  margin: 0 auto;
+  padding: 0 14px;
+`;
+
+const Header = styled.header`
+  background: #f1f1f1;
+  border-bottom: 1px solid #dce2ea;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 50;
+`;
+
+const HeaderInner = styled(Container)`
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+`;
+
+const HeaderOffset = styled.div`
+  height: 72px;
+`;
+
+const Brand = styled.a`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: 0.02em;
+  color: #2d3036;
+`;
+
+const BrandMark = styled(Image)`
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+`;
+
+const FooterBrand = styled(Brand)`
+  gap: 10px;
+  font-size: 18px;
+`;
+
+const FooterBrandMark = styled(BrandMark)`
+  width: 40px;
+  height: 40px;
+`;
+
+const Nav = styled.nav`
+  display: flex;
+  gap: 30px;
+
+  @media (max-width: 940px) {
+    display: none;
+  }
+`;
+
+const NavLink = styled.a`
+  color: #2d3036;
+  font-size: 18px;
+  font-weight: 500;
+  transition: color 0.16s ease;
+
+  &:hover {
+    color: #005284;
+  }
+`;
+
+const HeaderActions = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+
+const HeaderPhone = styled.a`
+  color: #2d3036;
+  font-size: 17px;
+  font-weight: 800;
+`;
+
+const Hero = styled.section`
+  position: relative;
+  min-height: 620px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: #d8cfd0;
+
+  @media (max-width: 940px) {
+    min-height: 560px;
+  }
+`;
+
+const HeroBackgroundFrame = styled.div`
+  position: absolute;
+  inset: 0;
+  width: min(1200px, 100%);
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 14px;
+  box-sizing: border-box;
+  z-index: 0;
+`;
+
+const HeroBackground = styled.div`
+  position: absolute;
+  inset: 0;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(
+        circle at 14% 18%,
+        rgba(255, 255, 255, 0.16) 0%,
+        transparent 32%
+      ),
+      radial-gradient(
+        circle at 72% 24%,
+        rgba(255, 255, 255, 0.08) 0%,
+        transparent 22%
+      ),
+      radial-gradient(
+        circle at 80% 38%,
+        rgba(122, 116, 108, 0.08) 0%,
+        transparent 30%
+      ),
+      radial-gradient(
+        circle at 36% 76%,
+        rgba(118, 113, 106, 0.07) 0%,
+        transparent 28%
+      ),
+      radial-gradient(
+        circle at 58% 58%,
+        rgba(255, 255, 255, 0.04) 0%,
+        transparent 18%
+      ),
+      repeating-radial-gradient(
+        circle at 20% 30%,
+        rgba(255, 255, 255, 0.022) 0 1px,
+        rgba(120, 115, 108, 0.018) 1px 2px,
+        transparent 2px 7px
+      ),
+      linear-gradient(
+        180deg,
+        rgba(214, 210, 204, 0.24) 0%,
+        rgba(191, 186, 178, 0.18) 100%
+      );
+    opacity: 0.5;
+    mix-blend-mode: soft-light;
+    pointer-events: none;
+  }
+`;
+
+const HeroBackgroundImage = styled(Image)`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 58% center;
+`;
+
+const HeroContent = styled(Container)`
+  position: relative;
+  z-index: 1;
+  padding-top: 16px;
+  padding-left: 82px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  @media (max-width: 940px) {
+    padding-top: 30px;
+    padding-bottom: 48px;
+    padding-left: 32px;
+  }
+`;
+
+const H1 = styled.h1`
+  color: #2d3036;
+  font-size: clamp(38px, 6.6vw, 72px);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  max-width: 13ch;
+  text-shadow:
+    0 1px 2px rgba(255, 255, 255, 0.22),
+    0 8px 18px rgba(108, 102, 95, 0.12);
+`;
+
+const Accent = styled.span`
+  color: #1f5373;
+`;
+
+const HeroText = styled.p`
+  margin-top: 40px;
+  margin-bottom: 20px;
+  color: #2d3036;
+  max-width: 52ch;
+  line-height: 1.5;
+  font-size: 19px;
+  text-shadow:
+    0 1px 1px rgba(255, 255, 255, 0.18),
+    0 6px 14px rgba(128, 120, 110, 0.08);
+`;
+
+const Buttons = styled.div`
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+`;
+
+const PrimaryBtn = styled.a`
+  background: #005284;
+  color: #fff;
+  border-radius: 18px;
+  padding: 14px 22px;
+  margin-top: 32px;
+  font-weight: 600;
+  font-size: 18px;
+`;
+
+const HeroPrimaryBtn = styled(PrimaryBtn)`
+  background: #1f5373;
+`;
+
+const Stats = styled.div`
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  max-width: 560px;
+
+  @media (max-width: 680px) {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+`;
+
+const StatItem = styled.div`
+  padding: 0;
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  align-items: start;
+  gap: 6px;
+  text-align: left;
+`;
+
+const StatText = styled.div`
+  display: grid;
+  gap: 2px;
+`;
+
+const StatIcon = styled.span`
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  color: #2d3036;
+  margin-top: 2px;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    stroke-width: 1.8;
+  }
+`;
+
+const StatValue = styled.div`
+  color: #2d3036;
+  font-size: 27px;
+  font-weight: 700;
+  line-height: 1;
+  text-shadow:
+    0 1px 1px rgba(190, 86, 86, 0.14),
+    0 6px 14px rgba(128, 120, 110, 0.08);
+`;
+
+const StatLabel = styled.p`
+  color: #2d3036;
+  font-size: 14px;
+  margin-top: 0;
+  line-height: 1.15;
+  text-shadow:
+    0 1px 1px rgba(255, 255, 255, 0.14),
+    0 4px 10px rgba(128, 120, 110, 0.06);
+`;
+
+const Section = styled.section`
+  padding: 42px 0;
+`;
+
+const SectionLabel = styled.p`
+  color: #005284;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  font-size: 10px;
+  font-weight: 700;
+`;
+
+const H2 = styled.h2`
+  margin-top: 8px;
+  color: #2d3036;
+  font-size: clamp(32px, 4.4vw, 48px);
+  line-height: 1.03;
+`;
+
+const ServicesTitle = styled(H2)`
+  text-align: center;
+  margin-bottom: 45px;
+`;
+
+const ServiceGrid = styled.div`
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+
+  @media (max-width: 1100px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: 900px) {
+    gap: 16px;
+  }
+
+  @media (max-width: 700px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const ServiceMore = styled.details`
+  margin-top: 22px;
+
+  &[open] > summary {
+    display: none;
+  }
+`;
+
+const ServiceMoreButton = styled.summary`
+  width: fit-content;
+  margin: 0 auto;
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f4f6fa;
+  color: #2d3036;
+  box-shadow: 0 2px 4px rgba(24, 35, 56, 0.035);
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-size: 16px;
+  font-weight: 600;
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+`;
+
+const ServiceCardItem = styled.article`
+  background: #f4f6fa;
+  border-radius: 24px;
+  padding: 8px 8px 10px;
+  display: grid;
+  gap: 8px;
+  overflow: hidden;
+  height: 100%;
+  box-shadow: 0 2px 4px rgba(24, 35, 56, 0.035);
+`;
+
+const ServiceMedia = styled.div`
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2 / 1;
+  overflow: hidden;
+  border-radius: 14px;
+`;
+
+const ServiceImage = styled(Image)`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 18px;
+`;
+
+const ServicePlaceholder = styled.span`
+  width: 100%;
+  height: 100%;
+  border-radius: 18px;
+  border: 1px solid #ccd7e7;
+  display: grid;
+  place-items: center;
+  color: #6f7f97;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  background:
+    radial-gradient(
+      circle at 24% 22%,
+      rgba(0, 82, 132, 0.1) 0%,
+      transparent 42%
+    ),
+    radial-gradient(
+      circle at 78% 78%,
+      rgba(0, 82, 132, 0.08) 0%,
+      transparent 48%
+    ),
+    linear-gradient(145deg, #edf3f9 0%, #e5edf6 100%);
+`;
+
+const ServiceContent = styled.div`
+  padding: 0 8px 4px;
+  display: grid;
+  gap: 10px;
+`;
+
+const ServiceCardTitle = styled.h3`
+  margin: 0;
+  color: #2d3036;
+  font-size: 20px;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+`;
+
+const ServiceDivider = styled.div`
+  height: 1px;
+  background: #d8dde6;
+`;
+
+const ServiceCardText = styled.p`
+  margin: 0;
+  color: #2d3036;
+  font-size: 15px;
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+`;
+
+type ServiceItemCardProps = {
+  item: ServiceCard;
+};
+
+function ServiceItemCard({ item }: ServiceItemCardProps) {
+  return (
+    <ServiceCardItem>
+      <ServiceMedia>
+        {item.image ? (
+          <ServiceImage
+            src={item.image}
+            alt={item.title}
+            width={640}
+            height={360}
+          />
+        ) : (
+          <ServicePlaceholder>Р ВР В·Р С•Р В±РЎР‚Р В°Р В¶Р ВµР Р…Р С‘Р Вµ РЎС“РЎРѓР В»РЎС“Р С–Р С‘</ServicePlaceholder>
+        )}
+      </ServiceMedia>
+      <ServiceContent>
+        <ServiceCardTitle>{item.title}</ServiceCardTitle>
+        {SHOW_SERVICE_DESCRIPTION && (
+          <>
+            <ServiceDivider />
+            <ServiceCardText>
+              {item.description} {item.details}
+            </ServiceCardText>
+          </>
+        )}
+      </ServiceContent>
+    </ServiceCardItem>
+  );
+}
+
+const PortfolioWrap = styled.section`
+  padding: 40px 0;
+  background: #e5e8ee;
+`;
+
+const CalcSection = styled.section`
+  position: relative;
+  background: #d8cfd0;
+  padding: clamp(40px, 6vw, 64px) 0;
+  overflow: hidden;
+`;
+
+const CalcGrid = styled(Container)`
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: stretch;
+`;
+
+const CalcTitle = styled.h2`
+  margin-top: 0;
+  margin-bottom: 14px;
+  color: #2d3036;
+  font-size: clamp(24px, 3.4vw, 36px);
+  line-height: 1.08;
+  text-align: center;
+`;
+
+const CalcCard = styled.div`
+  position: relative;
+  background: linear-gradient(145deg, #eef2f5 0%, #e4eaef 45%, #dce4ea 100%);
+  border-radius: 18px;
+  border: 1px solid #bac6d1;
+  padding: clamp(30px, 3.8vw, 42px) clamp(44px, 6vw, 72px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    0 7px 14px rgba(8, 30, 53, 0.1);
+  width: 88%;
+  margin: 0 auto;
+  min-height: 360px;
+  padding-bottom: clamp(84px, 9vw, 85px);
+`;
+
+const CalcBody = styled.div`
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  align-items: start;
+
+  @media (max-width: 980px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const LeadForm = styled.form`
+  display: grid;
+  gap: 16px;
+  align-content: start;
+  min-height: 100%;
+  margin-top: 22px;
+`;
+
+const LeadField = styled.input`
+  height: 46px;
+  border-radius: 16px;
+  border: 1px solid #b8c8d8;
+  background: #f7fafc;
+  color: #2d3036;
+  padding: 0 14px;
+
+  &::placeholder {
+    color: #6b7a8c;
+  }
+`;
+
+const LeadSubmit = styled.button`
+  position: absolute;
+  right: clamp(24px, 4vw, 44px);
+  bottom: clamp(50px, 6vw, 70px);
+  height: 46px;
+  width: fit-content;
+  border-radius: 12px;
+  border: 1px solid #1f5373;
+  background: #1f5373;
+  color: #fff;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0 18px;
+
+  @media (max-width: 980px) {
+    position: static;
+    justify-self: end;
+  }
+`;
+
+const Bolt = styled.span<{ $pos: "tl" | "tr" | "bl" | "br" }>`
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid #8e9ca9;
+  background: radial-gradient(
+    circle at 32% 30%,
+    #fbfdff 0%,
+    #b7c2cc 48%,
+    #8a98a6 100%
+  );
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.42);
+  z-index: 2;
+  pointer-events: none;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    background: #72808d;
+    transform: translate(-50%, -50%);
+  }
+
+  &::before {
+    width: 8px;
+    height: 1px;
+  }
+
+  &::after {
+    width: 1px;
+    height: 8px;
+  }
+
+  ${(props) => props.$pos === "tl" && "left: 10px; top: 10px;"}
+  ${(props) => props.$pos === "tr" && "right: 10px; top: 10px;"}
+  ${(props) => props.$pos === "bl" && "left: 10px; bottom: 10px;"}
+  ${(props) => props.$pos === "br" && "right: 10px; bottom: 10px;"}
+`;
+
+const Footer = styled.footer`
+  background: #eef1f6;
+`;
+
+const FooterTop = styled(Container)`
+  padding: 26px 14px;
+`;
+
+const FooterGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 14px;
+
+  @media (max-width: 940px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (max-width: 620px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const FooterTitle = styled.h3`
+  color: #2d3036;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 10px;
+`;
+
+const FooterText = styled.p`
+  color: #2d3036;
+  line-height: 1.5;
+  font-size: 14px;
+`;
+
+const FooterList = styled.ul`
+  list-style: none;
+  display: grid;
+  gap: 8px;
+  color: #2d3036;
+  font-size: 14px;
+`;
+
+const FooterBottom = styled(Container)`
+  border-top: 1px solid #d8deea;
+  color: #2d3036;
+  font-size: 12px;
+  padding: 12px 14px 20px;
+`;
+
+export default function Home() {
+  return (
+    <Page>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessLd) }}
+      />
+
+      <Header>
+        <HeaderInner>
+          <Brand href="#top">
+            <BrandMark
+              src="/logo.svg"
+              alt="Р вЂєР С•Р С–Р С•РЎвЂљР С‘Р С— Р В­Р Р…Р С”Р С•РЎР‚"
+              width={40}
+              height={40}
+            />
+            Р В­Р СњР С™Р С›Р В 
+          </Brand>
+          <Nav>
+            <NavLink href="#services">Р Р€РЎРѓР В»РЎС“Р С–Р С‘</NavLink>
+            <NavLink href="#portfolio">Р СџРЎР‚Р С‘Р СР ВµРЎР‚РЎвЂ№ РЎР‚Р В°Р В±Р С•РЎвЂљ</NavLink>
+            <NavLink href="#calculator">Р В Р В°РЎРѓРЎРѓРЎвЂЎР С‘РЎвЂљР В°РЎвЂљРЎРЉ РЎРѓРЎвЂљР С•Р С‘Р СР С•РЎРѓРЎвЂљРЎРЉ</NavLink>
+            <NavLink href="#contacts">Р С™Р С•Р Р…РЎвЂљР В°Р С”РЎвЂљРЎвЂ№</NavLink>
+          </Nav>
+          <HeaderActions>
+            <HeaderPhone href="tel:+79189816434">+7 918 981-64-34</HeaderPhone>
+          </HeaderActions>
+        </HeaderInner>
+      </Header>
+      <HeaderOffset />
+
+      <Hero id="top">
+        <HeroBackgroundFrame>
+          <HeroBackground>
+            <HeroBackgroundImage
+              src="/img/hero.png"
+              alt="Р В­Р В»Р ВµР С”РЎвЂљРЎР‚Р С•Р СР С•Р Р…РЎвЂљР В°Р В¶Р Р…РЎвЂ№Р Вµ РЎР‚Р В°Р В±Р С•РЎвЂљРЎвЂ№ Р В­Р Р…Р С”Р С•РЎР‚"
+              fill
+              priority
+              sizes="(max-width: 1200px) 100vw, 1200px"
+            />
+          </HeroBackground>
+        </HeroBackgroundFrame>
+        <HeroContent>
+          <H1>
+            Р В­Р В»Р ВµР С”РЎвЂљРЎР‚Р С•Р СР С•Р Р…РЎвЂљР В°Р В¶
+            <br />Р Р† <Accent>Р С™РЎР‚Р В°РЎРѓР Р…Р С•Р Т‘Р В°РЎР‚Р Вµ</Accent>
+          </H1>
+          <HeroText>
+            Р СџРЎР‚Р ВµР СР С‘Р В°Р В»РЎРЉР Р…РЎвЂ№Р Вµ Р С‘Р Р…Р В¶Р ВµР Р…Р ВµРЎР‚Р Р…РЎвЂ№Р Вµ РЎР‚Р ВµРЎв‚¬Р ВµР Р…Р С‘РЎРЏ Р Т‘Р В»РЎРЏ Р С”Р Р†Р В°РЎР‚РЎвЂљР С‘РЎР‚, РЎвЂЎР В°РЎРѓРЎвЂљР Р…РЎвЂ№РЎвЂ¦ Р Т‘Р С•Р СР С•Р Р† Р С‘
+            Р Р…Р С•Р Р†Р С•РЎРѓРЎвЂљРЎР‚Р С•Р ВµР С”. Р СџРЎР‚Р С•Р ВµР С”РЎвЂљ, Р СР С•Р Р…РЎвЂљР В°Р В¶, Р С—РЎС“РЎРѓР С” Р С‘ Р С–Р В°РЎР‚Р В°Р Р…РЎвЂљР С‘Р в„–Р Р…Р С•Р Вµ РЎРѓР С•Р С—РЎР‚Р С•Р Р†Р С•Р В¶Р Т‘Р ВµР Р…Р С‘Р Вµ.
+          </HeroText>
+          <Stats>
+            <StatItem>
+              <StatIcon>
+                <HiOutlineBriefcase />
+              </StatIcon>
+              <StatText>
+                <StatValue>500+</StatValue>
+                <StatLabel>Р вЂ™РЎвЂ№Р С—Р С•Р В»Р Р…Р ВµР Р…Р Р…РЎвЂ№РЎвЂ¦ Р С—РЎР‚Р С•Р ВµР С”РЎвЂљР С•Р Р†</StatLabel>
+              </StatText>
+            </StatItem>
+            <StatItem>
+              <StatIcon>
+                <HiOutlineShieldCheck />
+              </StatIcon>
+              <StatText>
+                <StatValue>10 Р В»Р ВµРЎвЂљ</StatValue>
+                <StatLabel>Р С›Р С—РЎвЂ№РЎвЂљР В° Р С‘ Р С–Р В°РЎР‚Р В°Р Р…РЎвЂљР С‘Р С‘ Р С”Р В°РЎвЂЎР ВµРЎРѓРЎвЂљР Р†Р В°</StatLabel>
+              </StatText>
+            </StatItem>
+            <StatItem>
+              <StatIcon>
+                <HiOutlineClock />
+              </StatIcon>
+              <StatText>
+                <StatValue>24РЎвЂЎ</StatValue>
+                <StatLabel>Р РЋР С”Р С•РЎР‚Р С•РЎРѓРЎвЂљРЎРЉ Р С—Р ВµРЎР‚Р Р†Р С‘РЎвЂЎР Р…Р С•Р С–Р С• Р С•РЎвЂљР Р†Р ВµРЎвЂљР В°</StatLabel>
+              </StatText>
+            </StatItem>
+          </Stats>
+          <Buttons>
+            <HeroPrimaryBtn href="#calculator">
+              Р В Р В°РЎРѓРЎРѓРЎвЂЎР С‘РЎвЂљР В°РЎвЂљРЎРЉ РЎРѓРЎвЂљР С•Р С‘Р СР С•РЎРѓРЎвЂљРЎРЉ
+            </HeroPrimaryBtn>
+          </Buttons>
+        </HeroContent>
+      </Hero>
+
+      <Section id="services">
+        <Container>
+          <ServicesTitle>Р В§РЎвЂљР С• Р СРЎвЂ№ Р Т‘Р ВµР В»Р В°Р ВµР С</ServicesTitle>
+          <ServiceGrid>
+            {serviceCards.slice(0, 9).map((item) => (
+              <ServiceItemCard key={item.title} item={item} />
+            ))}
+          </ServiceGrid>
+          {serviceCards.length > 9 && (
+            <ServiceMore>
+              <ServiceMoreButton>
+                <HiOutlineChevronDown />
+                Р СџР С•Р С”Р В°Р В·Р В°РЎвЂљРЎРЉ Р Р†РЎРѓР Вµ РЎС“РЎРѓР В»РЎС“Р С–Р С‘
+              </ServiceMoreButton>
+              <ServiceGrid>
+                {serviceCards.slice(9).map((item) => (
+                  <ServiceItemCard key={item.title} item={item} />
+                ))}
+              </ServiceGrid>
+            </ServiceMore>
+          )}
+        </Container>
+      </Section>
+
+      <CalcSection id="calculator">
+        <CalcGrid>
+          <CalcCard>
+            <Bolt $pos="tl" />
+            <Bolt $pos="tr" />
+            <Bolt $pos="bl" />
+            <Bolt $pos="br" />
+            <CalcTitle>Р В Р В°РЎРѓРЎРѓРЎвЂЎР С‘РЎвЂљР В°РЎвЂљРЎРЉ РЎРѓРЎвЂљР С•Р С‘Р СР С•РЎРѓРЎвЂљРЎРЉ</CalcTitle>
+            <CalcBody>
+              <PriceCalculator />
+              <LeadForm>
+                <LeadField type="text" placeholder="Р вЂ™Р В°РЎв‚¬Р Вµ Р С‘Р СРЎРЏ" />
+                <LeadField type="tel" placeholder="Р СњР С•Р СР ВµРЎР‚ РЎвЂљР ВµР В»Р ВµРЎвЂћР С•Р Р…Р В°" />
+              </LeadForm>
+            </CalcBody>
+            <LeadSubmit type="button">Р С›РЎРѓРЎвЂљР В°Р Р†Р С‘РЎвЂљРЎРЉ Р В·Р В°РЎРЏР Р†Р С”РЎС“</LeadSubmit>
+          </CalcCard>
+        </CalcGrid>
+      </CalcSection>
+
+      <PortfolioWrap id="portfolio">
+        <Container>
+          <SectionLabel>Р СџР С•РЎР‚РЎвЂљРЎвЂћР С•Р В»Р С‘Р С•</SectionLabel>
+          <H2>Р С™Р В°РЎвЂЎР ВµРЎРѓРЎвЂљР Р†Р С• РЎР‚Р В°Р В±Р С•РЎвЂљ Р Р† Р Т‘Р ВµРЎвЂљР В°Р В»РЎРЏРЎвЂ¦</H2>
+          <PortfolioCarousel />
+        </Container>
+      </PortfolioWrap>
+
+      <Footer>
+        <FooterTop>
+          <FooterGrid>
+            <div>
+              <FooterBrand href="#top">
+                <FooterBrandMark
+                  src="/logo.svg"
+                  alt="Р вЂєР С•Р С–Р С•РЎвЂљР С‘Р С— Р В­Р Р…Р С”Р С•РЎР‚"
+                  width={40}
+                  height={40}
+                />
+                Р В­Р СњР С™Р С›Р В 
+              </FooterBrand>
+              <FooterText>
+                Р вЂєР С‘Р Т‘Р ВµРЎР‚ Р Р† РЎРЊР В»Р ВµР С”РЎвЂљРЎР‚Р С•Р СР С•Р Р…РЎвЂљР В°Р В¶Р Вµ Р Р† Р С™РЎР‚Р В°РЎРѓР Р…Р С•Р Т‘Р В°РЎР‚Р Вµ. Р СџРЎР‚Р С•РЎвЂћР ВµРЎРѓРЎРѓР С‘Р С•Р Р…Р В°Р В»РЎРЉР Р…РЎвЂ№Р Вµ Р С‘Р Р…Р В¶Р ВµР Р…Р ВµРЎР‚Р Р…РЎвЂ№Р Вµ
+                РЎР‚Р ВµРЎв‚¬Р ВµР Р…Р С‘РЎРЏ Р Т‘Р В»РЎРЏ РЎвЂЎР В°РЎРѓРЎвЂљР Р…РЎвЂ№РЎвЂ¦ Р С‘ Р С”Р С•Р СР СР ВµРЎР‚РЎвЂЎР ВµРЎРѓР С”Р С‘РЎвЂ¦ Р С•Р В±РЎР‰Р ВµР С”РЎвЂљР С•Р Р†.
+              </FooterText>
+            </div>
+            <div>
+              <FooterTitle>Р С™Р С•Р Р…РЎвЂљР В°Р С”РЎвЂљРЎвЂ№</FooterTitle>
+              <FooterList>
+                <li>Р С–. Р С™РЎР‚Р В°РЎРѓР Р…Р С•Р Т‘Р В°РЎР‚</li>
+                <li>+7 (900) 000-00-00</li>
+                <li>info@encor-krd.ru</li>
+              </FooterList>
+            </div>
+            <div>
+              <FooterTitle>Р вЂєР С•Р С”Р В°РЎвЂ Р С‘РЎРЏ</FooterTitle>
+              <FooterText>
+                Р В Р В°Р В±Р С•РЎвЂљР В°Р ВµР С Р С—Р С• Р С™РЎР‚Р В°РЎРѓР Р…Р С•Р Т‘Р В°РЎР‚РЎС“ Р С‘ Р В±Р В»Р С‘Р В¶Р В°Р в„–РЎв‚¬Р С‘Р С РЎР‚Р В°Р в„–Р С•Р Р…Р В°Р С.
+              </FooterText>
+            </div>
+          </FooterGrid>
+        </FooterTop>
+        <FooterBottom>
+          Р’В© 2026 Р В­Р Р…Р С”Р С•РЎР‚ Р В­Р В»Р ВµР С”РЎвЂљРЎР‚Р С•Р СР С•Р Р…РЎвЂљР В°Р В¶. Р вЂ™РЎРѓР Вµ Р С—РЎР‚Р В°Р Р†Р В° Р В·Р В°РЎвЂ°Р С‘РЎвЂ°Р ВµР Р…РЎвЂ№.
+        </FooterBottom>
+      </Footer>
+    </Page>
+  );
+}
+

@@ -181,6 +181,12 @@ const HeaderInner = styled(Container)`
     flex-wrap: nowrap;
     justify-content: space-between;
   }
+
+  @media (max-width: 640px) {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    gap: 10px;
+  }
 `;
 
 const HeaderOffset = styled.div`
@@ -188,6 +194,10 @@ const HeaderOffset = styled.div`
 
   @media (max-width: 940px) {
     height: 72px;
+  }
+
+  @media (max-width: 640px) {
+    height: 56px;
   }
 `;
 
@@ -199,12 +209,22 @@ const Brand = styled.a`
   font-size: 24px;
   letter-spacing: 0.02em;
   color: #2d3036;
+
+  @media (max-width: 640px) {
+    gap: 8px;
+    font-size: 18px;
+  }
 `;
 
 const BrandMark = styled(Image)`
   width: 40px;
   height: 40px;
   object-fit: contain;
+
+  @media (max-width: 640px) {
+    width: 32px;
+    height: 32px;
+  }
 `;
 
 const FooterBrand = styled(Brand)`
@@ -289,6 +309,16 @@ const BurgerButton = styled.button`
   svg {
     width: 26px;
     height: 26px;
+  }
+
+  @media (max-width: 640px) {
+    width: 30px;
+    height: 30px;
+
+    svg {
+      width: 22px;
+      height: 22px;
+    }
   }
 `;
 
@@ -918,7 +948,7 @@ const ServiceMedia = styled.div`
   }
 
   @media (max-width: 700px) {
-    aspect-ratio: 3.8 / 1;
+    aspect-ratio: 3.2 / 1;
   }
 `;
 

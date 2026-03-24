@@ -107,10 +107,6 @@ const TypeButtons = styled.div`
   gap: 8px;
   justify-content: flex-start;
   width: 100%;
-
-  @media (max-width: 640px) {
-    flex-direction: column;
-  }
 `;
 
 const TypeButton = styled.button<{ $active?: boolean }>`
@@ -136,14 +132,15 @@ const TypeButton = styled.button<{ $active?: boolean }>`
   }
 
   @media (max-width: 640px) {
-    width: 100%;
+    width: calc((100% - 8px) / 2);
     max-width: none;
-    font-size: 14px;
+    font-size: 13px;
+    gap: 6px;
   }
 
   @media (max-width: 480px) {
     height: 38px;
-    font-size: 13px;
+    font-size: 12px;
     gap: 6px;
   }
 `;
@@ -179,11 +176,6 @@ const RoomButtons = styled.div`
   gap: 8px;
   justify-content: flex-start;
   width: 100%;
-
-  @media (max-width: 640px) {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 `;
 
 const RoomButton = styled.button<{ $active?: boolean }>`
@@ -198,12 +190,13 @@ const RoomButton = styled.button<{ $active?: boolean }>`
   transition: all 0.16s ease;
 
   @media (max-width: 640px) {
-    width: 100%;
+    width: calc((100% - 24px) / 4);
+    font-size: 13px;
   }
 
   @media (max-width: 480px) {
     height: 36px;
-    font-size: 13px;
+    font-size: 12px;
   }
 `;
 

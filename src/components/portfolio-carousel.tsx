@@ -62,7 +62,7 @@ const Wrap = styled.div`
   padding: 0 38px;
 
   @media (max-width: 720px) {
-    padding: 0 24px;
+    padding: 0 12px;
   }
 `;
 
@@ -100,6 +100,12 @@ const Card = styled.button<{ $orientation: "landscape" | "portrait" }>`
     linear-gradient(180deg, rgba(10, 21, 38, 0.02), rgba(10, 21, 38, 0.3)),
     #d7e0ea;
   box-shadow: 0 12px 22px rgba(17, 28, 46, 0.12);
+
+  @media (max-width: 640px) {
+    flex-basis: min(82vw, 320px);
+    min-height: ${(props) => (props.$orientation === "portrait" ? "300px" : "220px")};
+    border-radius: 16px;
+  }
 `;
 
 const CardImage = styled(Image)`
@@ -168,6 +174,7 @@ const Arrow = styled.button<{ $left?: boolean }>`
   @media (max-width: 720px) {
     width: 36px;
     height: 36px;
+    ${(props) => (props.$left ? "left: -4px;" : "right: -4px;")}
   }
 `;
 
@@ -180,6 +187,10 @@ const ModalBackdrop = styled.div`
   place-items: center;
   padding: 24px;
   z-index: 120;
+
+  @media (max-width: 640px) {
+    padding: 12px;
+  }
 `;
 
 const ModalCard = styled.div`
@@ -190,11 +201,20 @@ const ModalCard = styled.div`
   overflow: visible;
   background: #0d1625;
   box-shadow: 0 30px 80px rgba(4, 8, 16, 0.45);
+
+  @media (max-width: 640px) {
+    width: 100%;
+    border-radius: 16px;
+  }
 `;
 
 const ModalArrow = styled(Arrow)`
   ${(props) => (props.$left ? "left: 12px;" : "right: 12px;")}
   z-index: 3;
+
+  @media (max-width: 640px) {
+    ${(props) => (props.$left ? "left: 8px;" : "right: 8px;")}
+  }
 `;
 
 const CloseButton = styled.button`
@@ -220,6 +240,11 @@ const ModalMedia = styled.div`
   background: #0d1625;
   border-radius: 20px;
   overflow: hidden;
+
+  @media (max-width: 640px) {
+    height: min(72vh, 560px);
+    border-radius: 16px;
+  }
 `;
 
 const ModalImage = styled(Image)`

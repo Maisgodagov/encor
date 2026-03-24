@@ -9,8 +9,10 @@ import {
   HiOutlineBriefcase,
   HiOutlineChevronDown,
   HiOutlineClock,
+  HiOutlineBars3,
   HiOutlineInformationCircle,
   HiOutlineShieldCheck,
+  HiOutlineXMark,
 } from "react-icons/hi2";
 import styled from "styled-components";
 
@@ -143,6 +145,7 @@ const localBusinessLd = {
 };
 
 const SHOW_SERVICE_DESCRIPTION = true;
+const initialServicesCount = 8;
 
 const Page = styled.main`
   background: #f1f1f1;
@@ -156,7 +159,6 @@ const Container = styled.div`
 
 const Header = styled.header`
   background: #f1f1f1;
-  border-bottom: 1px solid #dce2ea;
   position: fixed;
   top: 0;
   left: 0;
@@ -171,10 +173,22 @@ const HeaderInner = styled(Container)`
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+
+  @media (max-width: 940px) {
+    min-height: auto;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+  }
 `;
 
 const HeaderOffset = styled.div`
-  height: 72px;
+  height: 73px;
+
+  @media (max-width: 940px) {
+    height: 72px;
+  }
 `;
 
 const Brand = styled.a`
@@ -207,6 +221,10 @@ const Nav = styled.nav`
   display: flex;
   gap: 30px;
 
+  @media (max-width: 1120px) {
+    gap: 22px;
+  }
+
   @media (max-width: 940px) {
     display: none;
   }
@@ -218,8 +236,17 @@ const NavLink = styled.a`
   font-weight: 500;
   transition: color 0.16s ease;
 
+  @media (max-width: 1120px) {
+    font-size: 16px;
+  }
+
   &:hover {
     color: #005284;
+  }
+
+  @media (max-width: 940px) {
+    white-space: nowrap;
+    font-size: 15px;
   }
 `;
 
@@ -227,12 +254,106 @@ const HeaderActions = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
+
+  @media (max-width: 940px) {
+    gap: 8px;
+  }
 `;
 
 const HeaderPhone = styled.a`
   color: #2d3036;
   font-size: 17px;
   font-weight: 800;
+
+  @media (max-width: 640px) {
+    display: none;
+  }
+`;
+
+const BurgerButton = styled.button`
+  display: none;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  color: #2d3036;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  @media (max-width: 940px) {
+    display: inline-flex;
+  }
+
+  svg {
+    width: 26px;
+    height: 26px;
+  }
+`;
+
+const MobileMenu = styled.div<{ $open: boolean }>`
+  display: none;
+
+  @media (max-width: 940px) {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(16, 24, 36, 0.34);
+    backdrop-filter: blur(2px);
+    z-index: 70;
+    opacity: ${(props) => (props.$open ? 1 : 0)};
+    pointer-events: ${(props) => (props.$open ? "auto" : "none")};
+    transition: opacity 0.24s ease;
+  }
+`;
+
+const MobileMenuInner = styled.div<{ $open: boolean }>`
+  margin-left: auto;
+  width: min(66.666vw, 360px);
+  height: 100%;
+  padding: 88px 16px 20px;
+  background: #f1f1f1;
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  box-shadow: -18px 0 40px rgba(16, 26, 42, 0.18);
+  transform: translateX(${(props) => (props.$open ? "0" : "100%")});
+  transition: transform 0.26s ease;
+
+  @media (max-width: 520px) {
+    width: min(82vw, 360px);
+  }
+`;
+
+const MobileNav = styled.nav`
+  display: grid;
+  gap: 8px;
+`;
+
+const MobileNavLink = styled.a`
+  display: block;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: #f8fafc;
+  color: #2d3036;
+  font-size: 16px;
+  font-weight: 600;
+  border: 1px solid #d8e0e9;
+`;
+
+const MobilePhone = styled.a`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: #1f5373;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  width: 100%;
 `;
 
 const Hero = styled.section`
@@ -244,7 +365,21 @@ const Hero = styled.section`
   background: #d8cfd0;
 
   @media (max-width: 940px) {
-    min-height: 560px;
+    min-height: 500px;
+  }
+
+  @media (max-width: 800px) {
+    min-height: 450px;
+  }
+
+  @media (max-width: 640px) {
+    min-height: 360px;
+    padding: 18px 0 18px;
+  }
+
+  @media (max-width: 480px) {
+    min-height: 320px;
+    padding: 14px 0 14px;
   }
 `;
 
@@ -315,6 +450,22 @@ const HeroBackgroundImage = styled(Image)`
   height: 100%;
   object-fit: cover;
   object-position: 58% center;
+
+  @media (max-width: 1020px) and (min-width: 941px) {
+    object-position: 63% center;
+  }
+
+  @media (max-width: 940px) {
+    object-position: 70% center;
+  }
+
+  @media (max-width: 640px) {
+    object-position: 88% center;
+  }
+
+  @media (max-width: 480px) {
+    object-position: 60% center;
+  }
 `;
 
 const HeroContent = styled(Container)`
@@ -327,9 +478,29 @@ const HeroContent = styled(Container)`
   align-items: flex-start;
 
   @media (max-width: 940px) {
-    padding-top: 30px;
-    padding-bottom: 48px;
-    padding-left: 32px;
+    padding-top: 12px;
+    padding-bottom: 28px;
+    padding-left: 22px;
+  }
+
+  @media (max-width: 800px) {
+    padding-top: 8px;
+    padding-bottom: 18px;
+    padding-left: 18px;
+  }
+
+  @media (max-width: 640px) {
+    align-items: stretch;
+    padding-top: 4px;
+    padding-bottom: 0;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  @media (max-width: 480px) {
+    padding-top: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 `;
 
@@ -342,6 +513,26 @@ const H1 = styled.h1`
   text-shadow:
     0 1px 2px rgba(255, 255, 255, 0.22),
     0 8px 18px rgba(108, 102, 95, 0.12);
+
+  @media (max-width: 940px) {
+    font-size: clamp(30px, 6vw, 52px);
+    max-width: 11ch;
+  }
+
+  @media (max-width: 800px) {
+    font-size: clamp(28px, 5.8vw, 44px);
+    max-width: 10ch;
+  }
+
+  @media (max-width: 640px) {
+    max-width: 10ch;
+    font-size: clamp(26px, 8.6vw, 36px);
+  }
+
+  @media (max-width: 480px) {
+    font-size: clamp(24px, 8.2vw, 32px);
+    max-width: 9ch;
+  }
 `;
 
 const Accent = styled.span`
@@ -358,6 +549,42 @@ const HeroText = styled.p`
   text-shadow:
     0 1px 1px rgba(255, 255, 255, 0.18),
     0 6px 14px rgba(128, 120, 110, 0.08);
+
+  @media (max-width: 1020px) and (min-width: 941px) {
+    max-width: 39ch;
+  }
+
+  @media (max-width: 940px) {
+    margin-top: 24px;
+    margin-bottom: 12px;
+    max-width: 32ch;
+    font-size: 16px;
+    line-height: 1.42;
+  }
+
+  @media (max-width: 860px) {
+    max-width: 37ch;
+  }
+
+  @media (max-width: 800px) {
+    margin-top: 18px;
+    max-width: 34ch;
+    font-size: 15px;
+  }
+
+  @media (max-width: 640px) {
+    margin-top: 14px;
+    font-size: 14px;
+    max-width: 30ch;
+    line-height: 1.34;
+  }
+
+  @media (max-width: 480px) {
+    margin-top: 10px;
+    font-size: 13px;
+    max-width: 24ch;
+    line-height: 1.28;
+  }
 `;
 
 const Buttons = styled.div`
@@ -365,6 +592,14 @@ const Buttons = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+
+  @media (max-width: 940px) {
+    margin-top: 10px;
+  }
+
+  @media (max-width: 800px) {
+    margin-top: 4px;
+  }
 `;
 
 const PrimaryBtn = styled.a`
@@ -375,6 +610,30 @@ const PrimaryBtn = styled.a`
   margin-top: 32px;
   font-weight: 600;
   font-size: 18px;
+
+  @media (max-width: 940px) {
+    margin-top: 18px;
+    padding: 12px 18px;
+    font-size: 16px;
+  }
+
+  @media (max-width: 800px) {
+    margin-top: 12px;
+    padding: 11px 16px;
+    font-size: 15px;
+  }
+
+  @media (max-width: 640px) {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    font-size: 15px;
+    padding: 12px 16px;
+  }
+
+  @media (max-width: 700px) {
+    display: none;
+  }
 `;
 
 const HeroPrimaryBtn = styled(PrimaryBtn)`
@@ -388,9 +647,25 @@ const Stats = styled.div`
   gap: 20px;
   max-width: 560px;
 
+  @media (max-width: 900px) and (min-width: 681px) {
+    gap: 12px;
+    max-width: 500px;
+  }
+
+  @media (max-width: 800px) and (min-width: 681px) {
+    margin-top: 26px;
+    gap: 8px;
+    max-width: 430px;
+  }
+
   @media (max-width: 680px) {
+    max-width: 330px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px 6px;
+  }
+
+  @media (max-width: 480px) {
     grid-template-columns: 1fr;
-    gap: 10px;
   }
 `;
 
@@ -401,11 +676,29 @@ const StatItem = styled.div`
   align-items: start;
   gap: 6px;
   text-align: left;
+
+  @media (max-width: 900px) and (min-width: 681px) {
+    gap: 4px;
+  }
+
+  @media (max-width: 800px) and (min-width: 681px) {
+    grid-template-columns: 20px 1fr;
+    gap: 3px;
+  }
+
+  @media (max-width: 680px) {
+    grid-template-columns: 18px 1fr;
+    gap: 2px;
+  }
 `;
 
 const StatText = styled.div`
   display: grid;
   gap: 2px;
+
+  @media (max-width: 900px) and (min-width: 681px) {
+    gap: 1px;
+  }
 `;
 
 const StatIcon = styled.span`
@@ -421,6 +714,23 @@ const StatIcon = styled.span`
     height: 100%;
     stroke-width: 1.8;
   }
+
+  @media (max-width: 860px) and (min-width: 681px) {
+    width: 26px;
+    height: 26px;
+  }
+
+  @media (max-width: 800px) and (min-width: 681px) {
+    width: 20px;
+    height: 20px;
+    margin-top: 1px;
+  }
+
+  @media (max-width: 680px) {
+    width: 18px;
+    height: 18px;
+    margin-top: 1px;
+  }
 `;
 
 const StatValue = styled.div`
@@ -431,6 +741,23 @@ const StatValue = styled.div`
   text-shadow:
     0 1px 1px rgba(190, 86, 86, 0.14),
     0 6px 14px rgba(128, 120, 110, 0.08);
+
+  @media (max-width: 940px) {
+    font-size: 23px;
+  }
+
+  @media (max-width: 860px) and (min-width: 681px) {
+    font-size: 25px;
+  }
+
+  @media (max-width: 800px) and (min-width: 681px) {
+    font-size: 18px;
+  }
+
+  @media (max-width: 680px) {
+    font-size: 16px;
+    letter-spacing: -0.02em;
+  }
 `;
 
 const StatLabel = styled.p`
@@ -441,10 +768,47 @@ const StatLabel = styled.p`
   text-shadow:
     0 1px 1px rgba(255, 255, 255, 0.14),
     0 4px 10px rgba(128, 120, 110, 0.06);
+
+  @media (max-width: 940px) {
+    font-size: 13px;
+  }
+
+  @media (max-width: 860px) and (min-width: 681px) {
+    font-size: 14px;
+  }
+
+  @media (max-width: 800px) and (min-width: 681px) {
+    font-size: 12px;
+    line-height: 1.08;
+  }
+
+  @media (max-width: 680px) {
+    font-size: 11px;
+    line-height: 1.05;
+  }
 `;
 
 const Section = styled.section`
   padding: 42px 0;
+
+  @media (max-width: 640px) {
+    padding: 34px 0;
+  }
+`;
+
+const ContentFlow = styled.div`
+  display: contents;
+
+  @media (max-width: 700px) {
+    display: flex;
+    flex-direction: column;
+  }
+`;
+
+const ServicesSection = styled(Section)`
+  @media (max-width: 700px) {
+    order: 2;
+  }
 `;
 
 const H2 = styled.h2`
@@ -461,6 +825,10 @@ const PortfolioTitle = styled(H2)`
 const ServicesTitle = styled(H2)`
   text-align: center;
   margin-bottom: 45px;
+
+  @media (max-width: 640px) {
+    margin-bottom: 28px;
+  }
 `;
 
 const ServiceGrid = styled.div`
@@ -520,6 +888,17 @@ const ServiceCardItem = styled.article`
   overflow: hidden;
   height: 100%;
   box-shadow: 0 2px 4px rgba(24, 35, 56, 0.035);
+
+  @media (max-width: 640px) {
+    border-radius: 18px;
+    padding: 8px;
+  }
+
+  @media (max-width: 1100px) {
+    border-radius: 20px;
+    padding: 7px 7px 9px;
+    gap: 7px;
+  }
 `;
 
 const ServiceMedia = styled.div`
@@ -528,6 +907,19 @@ const ServiceMedia = styled.div`
   aspect-ratio: 2 / 1;
   overflow: hidden;
   border-radius: 14px;
+
+  @media (max-width: 1100px) {
+    aspect-ratio: 2.35 / 1;
+    border-radius: 12px;
+  }
+
+  @media (max-width: 800px) {
+    aspect-ratio: 2.8 / 1;
+  }
+
+  @media (max-width: 700px) {
+    aspect-ratio: 3.8 / 1;
+  }
 `;
 
 const ServiceImage = styled(Image)`
@@ -567,6 +959,11 @@ const ServiceContent = styled.div`
   padding: 0 8px 4px;
   display: grid;
   gap: 10px;
+
+  @media (max-width: 1100px) {
+    padding: 0 6px 2px;
+    gap: 8px;
+  }
 `;
 
 const ServiceCardTitle = styled.h3`
@@ -579,6 +976,15 @@ const ServiceCardTitle = styled.h3`
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+
+  @media (max-width: 640px) {
+    font-size: 18px;
+  }
+
+  @media (max-width: 1100px) {
+    font-size: 18px;
+    line-height: 1.2;
+  }
 `;
 
 const ServiceDivider = styled.div`
@@ -595,6 +1001,16 @@ const ServiceCardText = styled.p`
   -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
   overflow: hidden;
+
+  @media (max-width: 640px) {
+    font-size: 14px;
+  }
+
+  @media (max-width: 1100px) {
+    font-size: 14px;
+    line-height: 1.38;
+    -webkit-line-clamp: 4;
+  }
 `;
 
 type ServiceItemCardProps = {
@@ -634,16 +1050,28 @@ function ServiceItemCard({ item }: ServiceItemCardProps) {
 const PortfolioWrap = styled.section`
   padding: 40px 0;
   background: #e5e8ee;
+
+  @media (max-width: 640px) {
+    padding: 34px 0;
+  }
 `;
 
 const ReviewsWrap = styled.section`
   padding: 42px 0;
   background: #edf1f6;
+
+  @media (max-width: 640px) {
+    padding: 34px 0;
+  }
 `;
 
 const ContactsWrap = styled.section`
   padding: 44px 0 50px;
   background: #e5e8ee;
+
+  @media (max-width: 640px) {
+    padding: 34px 0 38px;
+  }
 `;
 
 const ContactsGrid = styled.div`
@@ -665,6 +1093,10 @@ const ContactsCard = styled.div`
   box-shadow: 0 10px 22px rgba(18, 28, 44, 0.06);
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 640px) {
+    padding: 18px;
+  }
 `;
 
 const ContactsLead = styled.p`
@@ -693,6 +1125,10 @@ const ContactsItemValue = styled.div`
   color: #2d3036;
   font-size: 20px;
   line-height: 1.35;
+
+  @media (max-width: 640px) {
+    font-size: 18px;
+  }
 `;
 
 const ContactsNote = styled.p`
@@ -714,6 +1150,11 @@ const ContactsCta = styled.a`
   color: #fff;
   font-weight: 700;
   font-size: 15px;
+
+  @media (max-width: 640px) {
+    width: 100%;
+    align-self: stretch;
+  }
 `;
 
 const CalcSection = styled.section`
@@ -721,6 +1162,10 @@ const CalcSection = styled.section`
   background: #d8cfd0;
   padding: clamp(40px, 6vw, 64px) 0;
   overflow: hidden;
+
+  @media (max-width: 700px) {
+    order: 1;
+  }
 `;
 
 const CalcGrid = styled(Container)`
@@ -751,6 +1196,20 @@ const CalcCard = styled.div`
   width: 94%;
   margin: 0 auto;
   min-height: 360px;
+
+  @media (max-width: 980px) {
+    width: 100%;
+  }
+
+  @media (max-width: 640px) {
+    padding: 22px 18px;
+    border-radius: 16px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 16px 12px;
+    border-radius: 14px;
+  }
 `;
 
 const CalcBody = styled.div`
@@ -773,6 +1232,15 @@ const LeadForm = styled.form`
   border-radius: 12px;
   padding: 14px;
   height: 100%;
+
+  @media (max-width: 640px) {
+    padding: 12px;
+  }
+
+  @media (max-width: 480px) {
+    gap: 10px;
+    padding: 10px;
+  }
 `;
 
 const LeadField = styled.input`
@@ -785,6 +1253,11 @@ const LeadField = styled.input`
 
   &::placeholder {
     color: #6b7a8c;
+  }
+
+  @media (max-width: 480px) {
+    height: 40px;
+    padding: 0 12px;
   }
 `;
 
@@ -811,6 +1284,11 @@ const LeadSubmit = styled.button`
     opacity: 0.72;
     cursor: default;
   }
+
+  @media (max-width: 480px) {
+    height: 46px;
+    font-size: 15px;
+  }
 `;
 
 const LeadPrice = styled.strong<{ $isFallback?: boolean }>`
@@ -833,6 +1311,10 @@ const LeadHint = styled.p`
   display: flex;
   align-items: center;
   gap: 8px;
+
+  @media (max-width: 640px) {
+    align-items: flex-start;
+  }
 `;
 
 const LeadHintIcon = styled.span`
@@ -850,6 +1332,10 @@ const LeadPriceCard = styled.div`
   background: #e7edf3;
   border-radius: 10px;
   padding: 14px;
+
+  @media (max-width: 480px) {
+    padding: 12px;
+  }
 `;
 
 const LeadPriceLabel = styled.p`
@@ -908,6 +1394,10 @@ const Bolt = styled.span<{ $pos: "tl" | "tr" | "bl" | "br" }>`
   ${(props) => props.$pos === "tr" && "right: 10px; top: 10px;"}
   ${(props) => props.$pos === "bl" && "left: 10px; bottom: 10px;"}
   ${(props) => props.$pos === "br" && "right: 10px; bottom: 10px;"}
+
+  @media (max-width: 640px) {
+    display: none;
+  }
 `;
 
 const Footer = styled.footer`
@@ -940,6 +1430,11 @@ const FooterRow = styled.div`
     gap: 12px;
     padding: 16px 18px;
   }
+
+  @media (max-width: 640px) {
+    align-items: center;
+    text-align: center;
+  }
 `;
 
 const FooterText = styled.p`
@@ -948,6 +1443,10 @@ const FooterText = styled.p`
   font-size: 15px;
   margin: 0;
   max-width: 70ch;
+
+  @media (max-width: 640px) {
+    max-width: none;
+  }
 `;
 
 const FooterBottom = styled(Container)`
@@ -959,6 +1458,7 @@ const FooterBottom = styled(Container)`
 `;
 
 export default function Home() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLeadSent, setIsLeadSent] = useState(false);
   const [isLeadSubmitting, setIsLeadSubmitting] = useState(false);
   const [leadName, setLeadName] = useState("");
@@ -1076,8 +1576,59 @@ export default function Home() {
           </Nav>
           <HeaderActions>
             <HeaderPhone href="tel:+79189816434">+7 918 981-64-34</HeaderPhone>
+            <BurgerButton
+              type="button"
+              aria-label={isMobileMenuOpen ? "Закрыть меню" : "Открыть меню"}
+              aria-expanded={isMobileMenuOpen}
+              onClick={() => setIsMobileMenuOpen((value) => !value)}
+            >
+              {isMobileMenuOpen ? <HiOutlineXMark /> : <HiOutlineBars3 />}
+            </BurgerButton>
           </HeaderActions>
         </HeaderInner>
+        <MobileMenu
+          $open={isMobileMenuOpen}
+          onClick={() => setIsMobileMenuOpen(false)}
+        >
+          <MobileMenuInner
+            $open={isMobileMenuOpen}
+            onClick={(event) => event.stopPropagation()}
+          >
+            <MobileNav>
+              <MobileNavLink
+                href="#services"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Услуги
+              </MobileNavLink>
+              <MobileNavLink
+                href="#portfolio"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Примеры работ
+              </MobileNavLink>
+              <MobileNavLink
+                href="#reviews"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Отзывы
+              </MobileNavLink>
+              <MobileNavLink
+                href="#calculator"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Рассчитать стоимость
+              </MobileNavLink>
+              <MobileNavLink
+                href="#contacts"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Контакты
+              </MobileNavLink>
+            </MobileNav>
+            <MobilePhone href="tel:+79189816434">+7 918 981-64-34</MobilePhone>
+          </MobileMenuInner>
+        </MobileMenu>
       </Header>
       <HeaderOffset />
 
@@ -1096,7 +1647,10 @@ export default function Home() {
         <HeroContent>
           <H1>
             Электромонтаж
-            <br />в <Accent>Краснодаре</Accent>
+            <br />
+            <span style={{ whiteSpace: "nowrap" }}>
+              в <Accent>Краснодаре</Accent>
+            </span>
           </H1>
           <HeroText>
             Премиальные инженерные решения для квартир, частных домов и
@@ -1139,97 +1693,99 @@ export default function Home() {
         </HeroContent>
       </Hero>
 
-      <Section id="services">
-        <Container>
-          <ServicesTitle>Что мы делаем</ServicesTitle>
-          <ServiceGrid>
-            {serviceCards.slice(0, 9).map((item) => (
-              <ServiceItemCard key={item.title} item={item} />
-            ))}
-          </ServiceGrid>
-          {serviceCards.length > 9 && (
-            <ServiceMore>
-              <ServiceMoreButton>
-                <HiOutlineChevronDown />
-                Показать все услуги
-              </ServiceMoreButton>
-              <ServiceGrid>
-                {serviceCards.slice(9).map((item) => (
-                  <ServiceItemCard key={item.title} item={item} />
-                ))}
-              </ServiceGrid>
-            </ServiceMore>
-          )}
-        </Container>
-      </Section>
+      <ContentFlow>
+        <ServicesSection id="services">
+          <Container>
+            <ServicesTitle>Что мы делаем</ServicesTitle>
+            <ServiceGrid>
+              {serviceCards.slice(0, initialServicesCount).map((item) => (
+                <ServiceItemCard key={item.title} item={item} />
+              ))}
+            </ServiceGrid>
+            {serviceCards.length > initialServicesCount && (
+              <ServiceMore>
+                <ServiceMoreButton>
+                  <HiOutlineChevronDown />
+                  Показать все услуги
+                </ServiceMoreButton>
+                <ServiceGrid>
+                  {serviceCards.slice(initialServicesCount).map((item) => (
+                    <ServiceItemCard key={item.title} item={item} />
+                  ))}
+                </ServiceGrid>
+              </ServiceMore>
+            )}
+          </Container>
+        </ServicesSection>
 
-      <CalcSection id="calculator">
-        <CalcGrid>
-          <CalcCard>
-            <Bolt $pos="tl" />
-            <Bolt $pos="tr" />
-            <Bolt $pos="bl" />
-            <Bolt $pos="br" />
-            <CalcTitle>Рассчитать стоимость</CalcTitle>
-            <CalcBody>
-              <PriceCalculator
-                showResult={false}
-                onStateChange={setCalcState}
-              />
-              <LeadForm id="lead-form" onSubmit={handleLeadSubmit}>
-                <LeadPriceCard>
-                  <LeadPriceLabel>Ориентировочная стоимость</LeadPriceLabel>
-                  <LeadPrice
-                    $isFallback={
-                      calcState.resultText === "Нужен индивидуальный расчет"
-                    }
-                  >
-                    {calcState.resultText}
-                  </LeadPrice>
-                </LeadPriceCard>
-                <LeadField
-                  type="text"
-                  placeholder="Ваше имя"
-                  value={leadName}
-                  onChange={(event) => {
-                    setLeadName(event.target.value);
-                    setIsLeadSent(false);
-                    setLeadSubmitError("");
-                  }}
+        <CalcSection id="calculator">
+          <CalcGrid>
+            <CalcCard>
+              <Bolt $pos="tl" />
+              <Bolt $pos="tr" />
+              <Bolt $pos="bl" />
+              <Bolt $pos="br" />
+              <CalcTitle>Рассчитать стоимость</CalcTitle>
+              <CalcBody>
+                <PriceCalculator
+                  showResult={false}
+                  onStateChange={setCalcState}
                 />
-                <LeadField
-                  type="tel"
-                  placeholder="Номер телефона"
-                  value={leadPhone}
-                  onChange={(event) => {
-                    setLeadPhone(normalizePhone(event.target.value));
-                    setLeadPhoneError("");
-                    setIsLeadSent(false);
-                    setLeadSubmitError("");
-                  }}
-                />
-                {leadPhoneError && <LeadError>{leadPhoneError}</LeadError>}
-                {leadSubmitError && <LeadError>{leadSubmitError}</LeadError>}
-                <LeadSubmit type="submit" disabled={isLeadSubmitting}>
-                  {isLeadSubmitting ? "Отправка..." : "Оставить заявку"}
-                </LeadSubmit>
-                <LeadHint>
-                  <LeadHintIcon>
-                    <HiOutlineInformationCircle />
-                  </LeadHintIcon>
-                  Расчет ориентировочный. Точную смету формируем после осмотра
-                  объекта и уточнения состава работ.
-                </LeadHint>
-                {isLeadSent && (
-                  <LeadSuccess>
-                    Ваша заявка принята, мы свяжемся с вами в ближайшее время
-                  </LeadSuccess>
-                )}
-              </LeadForm>
-            </CalcBody>
-          </CalcCard>
-        </CalcGrid>
-      </CalcSection>
+                <LeadForm id="lead-form" onSubmit={handleLeadSubmit}>
+                  <LeadPriceCard>
+                    <LeadPriceLabel>Ориентировочная стоимость</LeadPriceLabel>
+                    <LeadPrice
+                      $isFallback={
+                        calcState.resultText === "Нужен индивидуальный расчет"
+                      }
+                    >
+                      {calcState.resultText}
+                    </LeadPrice>
+                  </LeadPriceCard>
+                  <LeadField
+                    type="text"
+                    placeholder="Ваше имя"
+                    value={leadName}
+                    onChange={(event) => {
+                      setLeadName(event.target.value);
+                      setIsLeadSent(false);
+                      setLeadSubmitError("");
+                    }}
+                  />
+                  <LeadField
+                    type="tel"
+                    placeholder="Номер телефона"
+                    value={leadPhone}
+                    onChange={(event) => {
+                      setLeadPhone(normalizePhone(event.target.value));
+                      setLeadPhoneError("");
+                      setIsLeadSent(false);
+                      setLeadSubmitError("");
+                    }}
+                  />
+                  {leadPhoneError && <LeadError>{leadPhoneError}</LeadError>}
+                  {leadSubmitError && <LeadError>{leadSubmitError}</LeadError>}
+                  <LeadSubmit type="submit" disabled={isLeadSubmitting}>
+                    {isLeadSubmitting ? "Отправка..." : "Оставить заявку"}
+                  </LeadSubmit>
+                  <LeadHint>
+                    <LeadHintIcon>
+                      <HiOutlineInformationCircle />
+                    </LeadHintIcon>
+                    Расчет ориентировочный. Точную смету формируем после осмотра
+                    объекта и уточнения состава работ.
+                  </LeadHint>
+                  {isLeadSent && (
+                    <LeadSuccess>
+                      Ваша заявка принята, мы свяжемся с вами в ближайшее время
+                    </LeadSuccess>
+                  )}
+                </LeadForm>
+              </CalcBody>
+            </CalcCard>
+          </CalcGrid>
+        </CalcSection>
+      </ContentFlow>
 
       <PortfolioWrap id="portfolio">
         <Container>

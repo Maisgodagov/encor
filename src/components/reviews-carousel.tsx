@@ -93,7 +93,7 @@ const Wrap = styled.div`
   padding: 0 38px;
 
   @media (max-width: 720px) {
-    padding: 0 24px;
+    padding: 0 12px;
   }
 `;
 
@@ -128,7 +128,9 @@ const Card = styled.article`
   }
 
   @media (max-width: 680px) {
-    flex: 0 0 min(360px, 82vw);
+    flex: 0 0 min(320px, 82vw);
+    padding: 18px;
+    border-radius: 16px;
   }
 `;
 
@@ -136,6 +138,10 @@ const ReviewText = styled.p`
   color: #39465a;
   font-size: 15px;
   line-height: 1.6;
+
+  @media (max-width: 640px) {
+    font-size: 14px;
+  }
 `;
 
 const ReviewFooter = styled.div`
@@ -172,6 +178,12 @@ const Arrow = styled.button<{ $left?: boolean }>`
   cursor: pointer;
   z-index: 2;
   box-shadow: 0 6px 14px rgba(20, 31, 48, 0.12);
+
+  @media (max-width: 720px) {
+    width: 36px;
+    height: 36px;
+    ${(props) => (props.$left ? "left: -4px;" : "right: -4px;")}
+  }
 `;
 
 export default function ReviewsCarousel() {

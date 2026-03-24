@@ -51,6 +51,14 @@ const Wrap = styled.div<{ $selected: boolean }>`
   justify-items: start;
   width: 100%;
   align-content: start;
+
+  @media (max-width: 640px) {
+    gap: 12px;
+  }
+
+  @media (max-width: 480px) {
+    gap: 10px;
+  }
 `;
 
 const Field = styled.label<{ $variant?: "default" | "compact" }>`
@@ -70,6 +78,19 @@ const Field = styled.label<{ $variant?: "default" | "compact" }>`
   border: none;
   border-radius: 12px;
   padding: ${(props) => (props.$variant === "compact" ? "10px 14px 14px" : "14px")};
+
+  @media (max-width: 640px) {
+    padding: ${(props) => (props.$variant === "compact" ? "10px 12px 12px" : "12px")};
+    gap: 10px;
+    font-size: 10px;
+  }
+
+  @media (max-width: 480px) {
+    padding: ${(props) => (props.$variant === "compact" ? "8px 10px 10px" : "10px")};
+    gap: 8px;
+    font-size: 9px;
+    border-radius: 10px;
+  }
 `;
 
 const Grid = styled.div`
@@ -86,6 +107,10 @@ const TypeButtons = styled.div`
   gap: 8px;
   justify-content: flex-start;
   width: 100%;
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+  }
 `;
 
 const TypeButton = styled.button<{ $active?: boolean }>`
@@ -112,7 +137,14 @@ const TypeButton = styled.button<{ $active?: boolean }>`
 
   @media (max-width: 640px) {
     width: 100%;
-    max-width: 320px;
+    max-width: none;
+    font-size: 14px;
+  }
+
+  @media (max-width: 480px) {
+    height: 38px;
+    font-size: 13px;
+    gap: 6px;
   }
 `;
 
@@ -131,6 +163,13 @@ const TypeButtonsStage = styled(TypeButtons)<{ $selected: boolean }>`
     height: 14px;
     transition: width 0.24s ease, height 0.24s ease;
   }
+
+  @media (max-width: 480px) {
+    ${TypeButton} svg {
+      width: 12px;
+      height: 12px;
+    }
+  }
 `;
 
 const RoomButtons = styled.div`
@@ -140,6 +179,11 @@ const RoomButtons = styled.div`
   gap: 8px;
   justify-content: flex-start;
   width: 100%;
+
+  @media (max-width: 640px) {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 `;
 
 const RoomButton = styled.button<{ $active?: boolean }>`
@@ -152,6 +196,15 @@ const RoomButton = styled.button<{ $active?: boolean }>`
   font-weight: 700;
   cursor: pointer;
   transition: all 0.16s ease;
+
+  @media (max-width: 640px) {
+    width: 100%;
+  }
+
+  @media (max-width: 480px) {
+    height: 36px;
+    font-size: 13px;
+  }
 `;
 
 const SliderWrap = styled.div`
@@ -165,12 +218,24 @@ const PointsValue = styled.strong`
   color: #005284;
   font-size: 22px;
   line-height: 1;
+
+  @media (max-width: 640px) {
+    font-size: 18px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 16px;
+  }
 `;
 
 const Slider = styled.input`
   width: min(520px, 100%);
   accent-color: #005284;
   border: none;
+
+  @media (max-width: 480px) {
+    max-width: 100%;
+  }
 `;
 
 const Result = styled.div`
@@ -186,6 +251,10 @@ const Price = styled.strong`
   color: #005284;
   font-size: clamp(24px, 3.8vw, 34px);
   line-height: 1;
+
+  @media (max-width: 480px) {
+    font-size: clamp(20px, 6vw, 26px);
+  }
 `;
 
 const Hint = styled.p`
@@ -193,6 +262,15 @@ const Hint = styled.p`
   color: #5a6a80;
   font-size: 13px;
   line-height: 1.45;
+
+  @media (max-width: 640px) {
+    font-size: 12px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 11px;
+    line-height: 1.35;
+  }
 `;
 
 function formatRange(min: number, max: number | null) {

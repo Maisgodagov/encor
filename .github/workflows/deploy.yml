@@ -41,7 +41,9 @@ jobs:
         run: npm run build
 
       - name: Remove Next build cache before upload
-        run: rm -rf .next/cache
+        run: |
+          rm -rf .next/cache
+          rm -rf .next/dev
 
       - name: Ensure deploy dir exists
         uses: appleboy/ssh-action@v1.2.2
@@ -55,14 +57,35 @@ jobs:
             mkdir -p /var/www/encor/frontend
 
       - name: Upload project files
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.VM_HOST }}
-          username: ${{ secrets.VM_USER }}
-          password: ${{ secrets.VM_PASSWORD }}
-          port: 22
-          source: "package.json,package-lock.json,next.config.ts,public,.next,ecosystem.config.cjs"
-          target: "/var/www/encor/frontend"
+        env:
+          VM_HOST: ${{ secrets.VM_HOST }}
+          VM_USER: ${{ secrets.VM_USER }}
+          VM_PASSWORD: ${{ secrets.VM_PASSWORD }}
+        run: |
+          set -e
+          sudo apt-get update
+          sudo apt-get install -y sshpass
+          export SSHPASS="$VM_PASSWORD"
+
+          sshpass -e ssh -o StrictHostKeyChecking=no -p 22 "$VM_USER@$VM_HOST" '
+            set -e
+            mkdir -p /var/www/encor/frontend/public
+            mkdir -p /var/www/encor/frontend/.next
+            rm -rf /var/www/encor/frontend/.next/*
+          '
+
+          sshpass -e rsync -az --info=progress2 \
+            -e "ssh -o StrictHostKeyChecking=no -p 22" \
+            package.json package-lock.json next.config.ts ecosystem.config.cjs \
+            "$VM_USER@$VM_HOST:/var/www/encor/frontend/"
+
+          sshpass -e rsync -az --delete --info=progress2 \
+            -e "ssh -o StrictHostKeyChecking=no -p 22" \
+            public/ "$VM_USER@$VM_HOST:/var/www/encor/frontend/public/"
+
+          sshpass -e rsync -az --delete --info=progress2 \
+            -e "ssh -o StrictHostKeyChecking=no -p 22" \
+            .next/ "$VM_USER@$VM_HOST:/var/www/encor/frontend/.next/"
 
       - name: Restart with PM2
         uses: appleboy/ssh-action@v1.2.2

@@ -1832,7 +1832,7 @@ export default function Home() {
                 </div>
                 <div>
                   <ContactsItemTitle>Электронная почта</ContactsItemTitle>
-                  <ContactsItemValue>infso@encor-krd.ru</ContactsItemValue>
+                  <ContactsItemValue>info@encor-krd.ru</ContactsItemValue>
                 </div>
                 <div>
                   <ContactsItemTitle>Город</ContactsItemTitle>

@@ -23,37 +23,103 @@ const items: PortfolioItem[] = [
     title: "Щит в частном доме",
     type: "image",
     orientation: "portrait",
-    src: "/img/3.png",
+    src: "/img/s1.jpg",
   },
   {
-    title: "Световые группы и монтаж",
+    title: "Щит в частном доме",
     type: "image",
     orientation: "landscape",
-    src: "/img/11.png",
+    src: "/img/s2.jpg",
   },
   {
-    title: "Соединения и проверка линий",
+    title: "Щит в частном доме",
+    type: "image",
+    orientation: "landscape",
+    src: "/img/s3.jpg",
+  },
+  {
+    title: "Щит в частном доме",
+    type: "image",
+    orientation: "landscape",
+    src: "/img/s4.jpg",
+  },
+  {
+    title: "Щит в частном доме",
     type: "image",
     orientation: "portrait",
-    src: "/img/6.png",
+    src: "/img/s6.jpg",
   },
   {
-    title: "Проходные выключатели",
+    title: "Щит в частном доме",
     type: "image",
     orientation: "landscape",
-    src: "/img/10.png",
+    src: "/img/s7.jpg",
   },
   {
-    title: "Сборка и маркировка групп",
-    type: "image",
-    orientation: "portrait",
-    src: "/img/5.png",
-  },
-  {
-    title: "Точки и расключение",
+    title: "Щит в частном доме",
     type: "image",
     orientation: "landscape",
-    src: "/img/4.png",
+    src: "/img/s8.jpg",
+  },
+  {
+    title: "Щит в частном доме",
+    type: "image",
+    orientation: "landscape",
+    src: "/img/s9.jpg",
+  },
+  {
+    title: "Щит в частном доме",
+    type: "image",
+    orientation: "landscape",
+    src: "/img/s10.jpg",
+  },
+  {
+    title: "Щит в частном доме",
+    type: "image",
+    orientation: "landscape",
+    src: "/img/s11.jpg",
+  },
+  {
+    title: "Щит в частном доме",
+    type: "image",
+    orientation: "landscape",
+    src: "/img/s12.jpg",
+  },
+  {
+    title: "Щит в частном доме",
+    type: "image",
+    orientation: "landscape",
+    src: "/img/s13.jpg",
+  },
+  {
+    title: "Щит в частном доме",
+    type: "image",
+    orientation: "landscape",
+    src: "/img/s14.jpg",
+  },
+  {
+    title: "Щит в частном доме",
+    type: "image",
+    orientation: "landscape",
+    src: "/img/s15.jpg",
+  },
+  {
+    title: "Щит в частном доме",
+    type: "image",
+    orientation: "landscape",
+    src: "/img/s16.jpg",
+  },
+  {
+    title: "Щит в частном доме",
+    type: "image",
+    orientation: "landscape",
+    src: "/img/s17.jpg",
+  },
+  {
+    title: "Щит в частном доме",
+    type: "image",
+    orientation: "landscape",
+    src: "/img/s18.jpg",
   },
 ];
 
@@ -89,7 +155,8 @@ const Card = styled.button<{ $orientation: "landscape" | "portrait" }>`
       props.$orientation === "portrait"
         ? "min(290px, 58vw)"
         : "min(420px, 82vw)"};
-  min-height: ${(props) => (props.$orientation === "portrait" ? "360px" : "260px")};
+  min-height: ${(props) =>
+    props.$orientation === "portrait" ? "360px" : "260px"};
   scroll-snap-align: start;
   border: none;
   border-radius: 18px;
@@ -103,7 +170,8 @@ const Card = styled.button<{ $orientation: "landscape" | "portrait" }>`
 
   @media (max-width: 640px) {
     flex-basis: min(82vw, 320px);
-    min-height: ${(props) => (props.$orientation === "portrait" ? "300px" : "220px")};
+    min-height: ${(props) =>
+      props.$orientation === "portrait" ? "300px" : "220px"};
     border-radius: 16px;
   }
 `;
@@ -117,8 +185,12 @@ const CardImage = styled(Image)`
 const CardOverlay = styled.div`
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(180deg, rgba(8, 16, 30, 0.04) 0%, rgba(8, 16, 30, 0.14) 44%, rgba(8, 16, 30, 0.66) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(8, 16, 30, 0.04) 0%,
+    rgba(8, 16, 30, 0.14) 44%,
+    rgba(8, 16, 30, 0.66) 100%
+  );
 `;
 
 const CardMeta = styled.div`
@@ -274,7 +346,9 @@ export default function PortfolioCarousel() {
       }
       if (event.key === "ArrowLeft") {
         setActiveIndex((current) =>
-          current === null ? current : (current - 1 + items.length) % items.length,
+          current === null
+            ? current
+            : (current - 1 + items.length) % items.length,
         );
       }
       if (event.key === "ArrowRight") {
@@ -291,7 +365,10 @@ export default function PortfolioCarousel() {
   const scrollByStep = (dir: "left" | "right") => {
     const el = trackRef.current;
     if (!el) return;
-    const step = Math.min(440, Math.max(260, Math.floor(el.clientWidth * 0.78)));
+    const step = Math.min(
+      440,
+      Math.max(260, Math.floor(el.clientWidth * 0.78)),
+    );
     el.scrollBy({
       left: dir === "left" ? -step : step,
       behavior: "smooth",
@@ -324,7 +401,11 @@ export default function PortfolioCarousel() {
               key={`${item.type}-${item.src}-${item.title}`}
               type="button"
               $orientation={item.orientation}
-              onClick={() => setActiveIndex(items.findIndex((entry) => entry.src === item.src))}
+              onClick={() =>
+                setActiveIndex(
+                  items.findIndex((entry) => entry.src === item.src),
+                )
+              }
             >
               <CardImage
                 src={item.type === "video" ? item.poster || item.src : item.src}

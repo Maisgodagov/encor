@@ -192,7 +192,10 @@ export default function ReviewsCarousel() {
   const scrollByStep = (dir: "left" | "right") => {
     const el = trackRef.current;
     if (!el) return;
-    const step = Math.min(380, Math.max(260, Math.floor(el.clientWidth * 0.72)));
+    const step = Math.min(
+      380,
+      Math.max(260, Math.floor(el.clientWidth * 0.72)),
+    );
     el.scrollBy({
       left: dir === "left" ? -step : step,
       behavior: "smooth",
@@ -201,7 +204,12 @@ export default function ReviewsCarousel() {
 
   return (
     <Wrap>
-      <Arrow $left type="button" onClick={() => scrollByStep("left")} aria-label="Прокрутить отзывы влево">
+      <Arrow
+        $left
+        type="button"
+        onClick={() => scrollByStep("left")}
+        aria-label="Прокрутить отзывы влево"
+      >
         <HiOutlineChevronLeft />
       </Arrow>
       <Track ref={trackRef}>
@@ -215,7 +223,11 @@ export default function ReviewsCarousel() {
           </Card>
         ))}
       </Track>
-      <Arrow type="button" onClick={() => scrollByStep("right")} aria-label="Прокрутить отзывы вправо">
+      <Arrow
+        type="button"
+        onClick={() => scrollByStep("right")}
+        aria-label="Прокрутить отзывы вправо"
+      >
         <HiOutlineChevronRight />
       </Arrow>
     </Wrap>

@@ -1373,6 +1373,21 @@ const LeadSuccess = styled.p`
   text-align: center;
 `;
 
+const LeadPrivacy = styled.p`
+  margin-top: -2px;
+  color: #6b7a8c;
+  font-size: 11px;
+  line-height: 1.45;
+  text-align: left;
+`;
+
+const LeadPrivacyLink = styled.a`
+  color: #1f5373;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+`;
+
 const Bolt = styled.span<{ $pos: "tl" | "tr" | "bl" | "br" }>`
   position: absolute;
   width: 14px;
@@ -1789,6 +1804,16 @@ export default function Home() {
                     Расчет ориентировочный. Точную смету формируем после осмотра
                     объекта и уточнения состава работ.
                   </LeadHint>
+                  <LeadPrivacy>
+                    Оставляя заявку, вы соглашаетесь с{" "}
+                    <LeadPrivacyLink
+                      href="/конфиденциальность.pdf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Политикой конфиденциальности
+                    </LeadPrivacyLink>
+                  </LeadPrivacy>
                   {isLeadSent && (
                     <LeadSuccess>
                       Ваша заявка принята, мы свяжемся с вами в ближайшее время

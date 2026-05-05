@@ -38,7 +38,6 @@ jobs:
       - name: Build
         env:
           NEXT_PUBLIC_API_BASE_URL: https://encor-krd.ru
-          NEXT_PUBLIC_YANDEX_METRIKA_ID: ${{ secrets.NEXT_PUBLIC_YANDEX_METRIKA_ID }}
         run: npm run build
 
       - name: Remove Next build cache before upload

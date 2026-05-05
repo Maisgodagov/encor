@@ -12,7 +12,7 @@ Stack:
 - `npm run lint`
 
 ## Analytics
-Yandex Metrica is enabled when `NEXT_PUBLIC_YANDEX_METRIKA_ID` is set to the counter ID.
+Yandex Metrica counter `109060617` is embedded in the app layout.
 
 ## Deployment
 - GitHub Actions workflow: `.github/workflows/deploy.yml`

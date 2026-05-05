@@ -5,6 +5,7 @@ import Image from "next/image";
 import PriceCalculator from "@/components/price-calculator";
 import PortfolioCarousel from "@/components/portfolio-carousel";
 import ReviewsCarousel from "@/components/reviews-carousel";
+import { YANDEX_METRIKA_COUNTER_ID } from "@/components/yandex-metrika";
 import {
   HiOutlineBriefcase,
   HiOutlineChevronDown,
@@ -135,8 +136,6 @@ const serviceCards: ServiceCard[] = [
 
 const SHOW_SERVICE_DESCRIPTION = true;
 const initialServicesCount = 8;
-const yandexMetrikaCounterId =
-  process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID?.trim();
 
 const Page = styled.main`
   background: #f1f1f1;
@@ -1578,10 +1577,7 @@ export default function Home() {
       setLeadName("");
       setLeadPhone("+7");
       setIsLeadSent(true);
-
-      if (yandexMetrikaCounterId && /^\d+$/.test(yandexMetrikaCounterId)) {
-        window.ym?.(Number(yandexMetrikaCounterId), "reachGoal", "lead_submit");
-      }
+      window.ym?.(YANDEX_METRIKA_COUNTER_ID, "reachGoal", "lead_submit");
     } catch {
       setLeadSubmitError("Не удалось отправить заявку. Попробуйте еще раз.");
     } finally {

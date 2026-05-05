@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
-import { Suspense } from "react";
 import "./globals.css";
 import StyledComponentsRegistry from "@/lib/styled-components-registry";
 import YandexMetrika from "@/components/yandex-metrika";
@@ -124,11 +123,7 @@ export default function RootLayout({
             />
           ))}
           {children}
-          <Suspense fallback={null}>
-            <YandexMetrika
-              counterId={process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID}
-            />
-          </Suspense>
+          <YandexMetrika />
         </StyledComponentsRegistry>
       </body>
     </html>

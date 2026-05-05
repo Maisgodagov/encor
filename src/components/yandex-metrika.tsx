@@ -1,8 +1,6 @@
 "use client";
 
 import Script from "next/script";
-import { usePathname, useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useRef } from "react";
 
 declare global {
   interface Window {
@@ -10,40 +8,9 @@ declare global {
   }
 }
 
-type YandexMetrikaProps = {
-  counterId?: string;
-};
+export const YANDEX_METRIKA_COUNTER_ID = 109060617;
 
-function isValidCounterId(value: string | undefined) {
-  return Boolean(value && /^\d+$/.test(value));
-}
-
-export default function YandexMetrika({ counterId }: YandexMetrikaProps) {
-  const normalizedCounterId = counterId?.trim();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const isFirstHit = useRef(true);
-
-  const pageUrl = useMemo(() => {
-    const query = searchParams.toString();
-    return query ? `${pathname}?${query}` : pathname;
-  }, [pathname, searchParams]);
-
-  useEffect(() => {
-    if (!isValidCounterId(normalizedCounterId)) return;
-
-    if (isFirstHit.current) {
-      isFirstHit.current = false;
-      return;
-    }
-
-    window.ym?.(Number(normalizedCounterId), "hit", pageUrl);
-  }, [normalizedCounterId, pageUrl]);
-
-  if (!isValidCounterId(normalizedCounterId)) {
-    return null;
-  }
-
+export default function YandexMetrika() {
   return (
     <>
       <Script id="yandex-metrika" strategy="afterInteractive">
@@ -51,24 +18,17 @@ export default function YandexMetrika({ counterId }: YandexMetrikaProps) {
           (function(m,e,t,r,i,k,a){
             m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
             m[i].l=1*new Date();
-            for (var j = 0; j < document.scripts.length; j++) {
-              if (document.scripts[j].src === r) { return; }
-            }
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
             k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-          })(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+          })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js?id=${YANDEX_METRIKA_COUNTER_ID}', 'ym');
 
-          ym(${normalizedCounterId}, "init", {
-            clickmap: true,
-            trackLinks: true,
-            accurateTrackBounce: true,
-            webvisor: true
-          });
+          ym(${YANDEX_METRIKA_COUNTER_ID}, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
         `}
       </Script>
       <noscript>
         <div
           dangerouslySetInnerHTML={{
-            __html: `<img src="https://mc.yandex.ru/watch/${normalizedCounterId}" style="position:absolute; left:-9999px;" alt="" />`,
+            __html: `<img src="https://mc.yandex.ru/watch/${YANDEX_METRIKA_COUNTER_ID}" style="position:absolute; left:-9999px;" alt="" />`,
           }}
         />
       </noscript>

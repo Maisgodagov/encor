@@ -24,6 +24,14 @@ type ServiceCard = {
   image?: string;
 };
 
+type PriceItem = {
+  name: string;
+  unit: string;
+  workPrice?: number;
+  materialPrice?: number;
+  totalPrice?: number;
+};
+
 const serviceCards: ServiceCard[] = [
   {
     title: "Проектная документация",
@@ -134,8 +142,57 @@ const serviceCards: ServiceCard[] = [
   },
 ];
 
+const priceItems: PriceItem[] = [
+  { name: "Изготовление лунок под установку многомодульных коробок", unit: "шт.", workPrice: 400, totalPrice: 400 },
+  { name: "Коробка установочная для сплошных стен", unit: "шт.", materialPrice: 25, totalPrice: 25 },
+  { name: "Монтаж многомодульных установочных коробок в пеноблоке, кирпиче и бетоне", unit: "шт.", workPrice: 100, totalPrice: 100 },
+  { name: "Монтаж распределительной коробки", unit: "шт.", workPrice: 750, totalPrice: 750 },
+  { name: "Коробка распределительная 100х100", unit: "шт.", materialPrice: 130, totalPrice: 880 },
+  { name: "Прокладка кабеля ВВГнг 3х10 в штробе или открыто", unit: "м", workPrice: 150, totalPrice: 150 },
+  { name: "Кабель ВВГнг 3х10", unit: "м", materialPrice: 520, totalPrice: 670 },
+  { name: "Прокладка кабеля ВВГнг 3х6 в штробе или открыто", unit: "м", workPrice: 150, totalPrice: 150 },
+  { name: "Кабель ВВГнг 3х6", unit: "м", materialPrice: 290, totalPrice: 440 },
+  { name: "Прокладка кабеля ВВГнг 3х4 в штробе или открыто", unit: "м", workPrice: 150, totalPrice: 150 },
+  { name: "Кабель ВВГнг 3х4", unit: "м", materialPrice: 210, totalPrice: 360 },
+  { name: "Прокладка кабеля ВВГнг 3х2,5 в штробе или открыто", unit: "м", workPrice: 150, totalPrice: 150 },
+  { name: "Кабель ВВГнг 3х2,5", unit: "м", materialPrice: 115, totalPrice: 265 },
+  { name: "Прокладка кабеля ВВГнг 3х1,5 в штробе или открыто", unit: "м", workPrice: 100, totalPrice: 100 },
+  { name: "Кабель ВВГнг 3х1,5", unit: "м", materialPrice: 80, totalPrice: 180 },
+  { name: "Прокладка кабеля ВВГнг 2х1,5 в штробе или открыто", unit: "м", workPrice: 100, totalPrice: 100 },
+  { name: "Кабель ВВГнг 2х1,5", unit: "м", materialPrice: 60, totalPrice: 160 },
+  { name: "Прокладка кабеля ПВС 2х1,5 в штробе или открыто", unit: "м", workPrice: 100, totalPrice: 100 },
+  { name: "Кабель ПВС 2х1,5", unit: "м", materialPrice: 62, totalPrice: 162 },
+  { name: "Прокладка кабеля UTP 4x2x0,51 в штробе или открыто", unit: "м", workPrice: 50, totalPrice: 50 },
+  { name: "Кабель UTP 4x2x0,51", unit: "м", materialPrice: 58, totalPrice: 108 },
+  { name: "Прокладка телевизионного кабеля SAT 703 в штробе или открыто", unit: "м", workPrice: 50, totalPrice: 50 },
+  { name: "Кабель SAT 703", unit: "м", materialPrice: 55, totalPrice: 105 },
+  { name: "Площадка монтажная под пистолет", unit: "уп.", materialPrice: 410, totalPrice: 410 },
+  { name: "Стяжка нейлоновая", unit: "уп.", materialPrice: 190, totalPrice: 190 },
+  { name: "Гвозди монтажные + газ", unit: "уп.", materialPrice: 2400, totalPrice: 2400 },
+  { name: "Штроба газоблок", unit: "м", workPrice: 400, totalPrice: 400 },
+  { name: "Штроба монолит", unit: "м", workPrice: 800, totalPrice: 800 },
+  { name: "Штробление под щит газоблок", unit: "шт.", workPrice: 3000, totalPrice: 3000 },
+  { name: "Штробление под щит бетон", unit: "шт.", workPrice: 5000, totalPrice: 5000 },
+  { name: "Заделка штробы", unit: "м", workPrice: 100, totalPrice: 100 },
+  { name: "Щит навесной: установка и расключение", unit: "шт.", workPrice: 5000, totalPrice: 5000 },
+  { name: "Щит накладной ЩРН-П 18 мод", unit: "шт.", materialPrice: 1950, totalPrice: 1950 },
+  { name: "Щит накладной ЩРН-П 24 мод", unit: "шт.", materialPrice: 2600, totalPrice: 2600 },
+  { name: "Щит встраиваемый ЩРВ-П 18 мод", unit: "шт.", materialPrice: 2050, totalPrice: 2050 },
+  { name: "Щит встраиваемый ЩРВ-П 24 мод", unit: "шт.", materialPrice: 2800, totalPrice: 2800 },
+  { name: "Реле напряжения 2п 40А", unit: "шт.", materialPrice: 3000, totalPrice: 3000 },
+  { name: "Выключатель автоматический 2п 40А", unit: "шт.", materialPrice: 725, totalPrice: 725 },
+  { name: "Дифференциальный автоматический выключатель 2п 32А", unit: "шт.", materialPrice: 1600, totalPrice: 1600 },
+  { name: "Дифференциальный автоматический выключатель 2п 16А", unit: "шт.", materialPrice: 1200, totalPrice: 1200 },
+  { name: "Выключатель автоматический 1п 10А", unit: "шт.", materialPrice: 190, totalPrice: 190 },
+  { name: "Выключатель автоматический 1п 16А", unit: "шт.", materialPrice: 170, totalPrice: 170 },
+  { name: "Шина медная двухфазная/однофазная, наконечники НШВИ, провод ПУГВ", unit: "шт.", materialPrice: 1000, totalPrice: 1000 },
+];
+
 const SHOW_SERVICE_DESCRIPTION = true;
 const initialServicesCount = 8;
+
+const formatPrice = (value?: number) =>
+  typeof value === "number" ? `${value.toLocaleString("ru-RU")} ₽` : "—";
 
 const Page = styled.main`
   background: #f1f1f1;
@@ -393,13 +450,13 @@ const Hero = styled.section`
   }
 
   @media (max-width: 640px) {
-    min-height: 360px;
-    padding: 18px 0 18px;
+    min-height: 260px;
+    padding: 18px 0 22px;
   }
 
   @media (max-width: 480px) {
-    min-height: 320px;
-    padding: 14px 0 14px;
+    min-height: 245px;
+    padding: 14px 0 20px;
   }
 `;
 
@@ -412,6 +469,7 @@ const HeroBackgroundFrame = styled.div`
   padding: 0 14px;
   box-sizing: border-box;
   z-index: 0;
+
 `;
 
 const HeroBackground = styled.div`
@@ -480,11 +538,11 @@ const HeroBackgroundImage = styled(Image)`
   }
 
   @media (max-width: 640px) {
-    object-position: 88% center;
+    object-position: 82% center;
   }
 
   @media (max-width: 480px) {
-    object-position: 60% center;
+    object-position: 76% center;
   }
 `;
 
@@ -510,7 +568,7 @@ const HeroContent = styled(Container)`
   }
 
   @media (max-width: 640px) {
-    align-items: stretch;
+    align-items: flex-start;
     padding-top: 4px;
     padding-bottom: 0;
     padding-left: 12px;
@@ -547,6 +605,7 @@ const H1 = styled.h1`
   @media (max-width: 640px) {
     max-width: 10ch;
     font-size: clamp(26px, 8.6vw, 36px);
+    text-shadow: none;
   }
 
   @media (max-width: 480px) {
@@ -595,8 +654,9 @@ const HeroText = styled.p`
   @media (max-width: 640px) {
     margin-top: 14px;
     font-size: 14px;
-    max-width: 30ch;
+    max-width: 34ch;
     line-height: 1.34;
+    text-shadow: none;
   }
 
   @media (max-width: 480px) {
@@ -679,9 +739,7 @@ const Stats = styled.div`
   }
 
   @media (max-width: 680px) {
-    max-width: 330px;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 8px 6px;
+    display: none;
   }
 
   @media (max-width: 480px) {
@@ -1067,6 +1125,162 @@ function ServiceItemCard({ item }: ServiceItemCardProps) {
   );
 }
 
+const PriceSection = styled(Section)`
+  background: #e5e8ee;
+
+  @media (max-width: 700px) {
+    order: 3;
+    padding: 26px 0;
+  }
+`;
+
+const PriceHeader = styled.div`
+  display: grid;
+  gap: 12px;
+  justify-items: center;
+  text-align: center;
+  margin-bottom: 28px;
+
+  @media (max-width: 640px) {
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+`;
+
+const PriceTitle = styled(H2)`
+  text-align: center;
+
+  @media (max-width: 640px) {
+    font-size: 28px;
+    line-height: 1.05;
+  }
+`;
+
+const PriceSubtitle = styled.p`
+  color: #516075;
+  font-size: 17px;
+  line-height: 1.5;
+  max-width: 68ch;
+
+  @media (max-width: 640px) {
+    font-size: 13px;
+    line-height: 1.35;
+  }
+`;
+
+const PriceCard = styled.div`
+  overflow: hidden;
+  border-radius: 18px;
+  border: 1px solid #d0dae5;
+  background: #f7fafe;
+  box-shadow: 0 14px 28px rgba(18, 28, 44, 0.07);
+
+  @media (max-width: 760px) {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+  }
+`;
+
+const PriceTable = styled.div`
+  display: grid;
+`;
+
+const PriceRow = styled.div<{ $head?: boolean }>`
+  display: grid;
+  grid-template-columns: minmax(280px, 1fr) 72px 112px 112px 118px;
+  gap: 0;
+  align-items: stretch;
+  background: ${(props) => (props.$head ? "#1f5373" : "#f7fafe")};
+  color: ${(props) => (props.$head ? "#fff" : "#2d3036")};
+  border-bottom: ${(props) => (props.$head ? "none" : "1px solid #dce4ed")};
+
+  &:nth-child(even) {
+    background: ${(props) => (props.$head ? "#1f5373" : "#f0f5f9")};
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  @media (max-width: 760px) {
+    display: ${(props) => (props.$head ? "none" : "grid")};
+    grid-template-columns: 1fr;
+    gap: 7px;
+    margin-bottom: 8px;
+    padding: 10px 12px;
+    border: 1px solid #d0dae5;
+    border-radius: 10px;
+    background: linear-gradient(145deg, #f8fbff 0%, #eef3f8 100%);
+    box-shadow: 0 4px 10px rgba(18, 28, 44, 0.04);
+
+    &:nth-child(even) {
+      background: linear-gradient(145deg, #f8fbff 0%, #eef3f8 100%);
+    }
+  }
+`;
+
+const PriceCell = styled.div<{ $name?: boolean; $strong?: boolean }>`
+  padding: ${(props) => (props.$name ? "14px 18px" : "14px 12px")};
+  font-size: ${(props) => (props.$name ? "15px" : "14px")};
+  line-height: 1.35;
+  font-weight: ${(props) => (props.$strong ? 800 : props.$name ? 600 : 500)};
+  border-right: 1px solid rgba(208, 218, 229, 0.8);
+
+  &:last-child {
+    border-right: none;
+  }
+
+  @media (max-width: 760px) {
+    display: ${(props) => (props.$name ? "block" : "flex")};
+    justify-content: space-between;
+    gap: 10px;
+    padding: 0;
+    border-right: none;
+    color: #2d3036;
+    font-size: ${(props) => (props.$name ? "14px" : "12px")};
+    line-height: 1.25;
+
+    ${(props) =>
+      !props.$name &&
+      `
+        &::before {
+          content: attr(data-label);
+          color: #6d7d92;
+          font-weight: 600;
+        }
+      `}
+  }
+`;
+
+const PriceTotal = styled(PriceCell)`
+  color: #1f5373;
+  font-size: 15px;
+
+  @media (max-width: 760px) {
+    padding-top: 7px;
+    border-top: 1px solid #d8e0e9;
+    font-size: 15px;
+  }
+`;
+
+const PriceNote = styled.p`
+  margin: 14px auto 0;
+  color: #6b7a8c;
+  font-size: 13px;
+  line-height: 1.45;
+  text-align: center;
+  max-width: 78ch;
+
+  @media (max-width: 640px) {
+    margin-top: 10px;
+    font-size: 11px;
+    line-height: 1.35;
+    text-align: left;
+  }
+`;
+
 const PortfolioWrap = styled.section`
   padding: 40px 0;
   background: #e5e8ee;
@@ -1184,7 +1398,7 @@ const CalcSection = styled.section`
   overflow: hidden;
 
   @media (max-width: 700px) {
-    order: 1;
+    order: 4;
   }
 `;
 
@@ -1543,31 +1757,33 @@ export default function Home() {
       return;
     }
 
-    if (!calcDetails.ready || !calcDetails.resultText) {
-      setLeadSubmitError("Сначала заполните параметры расчета");
-      return;
-    }
-
     setIsLeadSubmitting(true);
 
     try {
       const apiBaseUrl =
         process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:4000";
+      const leadPayload = calcDetails.ready
+        ? {
+            name: trimmedName,
+            phone: normalizedPhone,
+            resultText: calcDetails.resultText,
+            objectType: calcDetails.objectType || undefined,
+            objectTypeLabel: calcDetails.objectTypeLabel ?? "",
+            roomType: calcDetails.roomType ?? "",
+            roomTypeLabel: calcDetails.roomTypeLabel ?? "",
+            points: calcDetails.points ?? 0,
+          }
+        : {
+            name: trimmedName,
+            phone: normalizedPhone,
+          };
+
       const response = await fetch(`${apiBaseUrl}/api/applications`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          name: trimmedName,
-          phone: normalizedPhone,
-          resultText: calcDetails.resultText,
-          objectType: calcDetails.objectType ?? "",
-          objectTypeLabel: calcDetails.objectTypeLabel ?? "",
-          roomType: calcDetails.roomType ?? "",
-          roomTypeLabel: calcDetails.roomTypeLabel ?? "",
-          points: calcDetails.points ?? 0,
-        }),
+        body: JSON.stringify(leadPayload),
       });
 
       if (!response.ok) {
@@ -1748,6 +1964,49 @@ export default function Home() {
             )}
           </Container>
         </ServicesSection>
+
+        <PriceSection id="price">
+          <Container>
+            <PriceHeader>
+              <PriceTitle>Прайс на чистовую электрику</PriceTitle>
+              <PriceSubtitle>
+                Базовые цены по частым работам и материалам. Итоговая смета зависит
+                от объема, типа стен, трасс и комплектации щита.
+              </PriceSubtitle>
+            </PriceHeader>
+            <PriceCard>
+              <PriceTable>
+                <PriceRow $head>
+                  <PriceCell $name>Наименование</PriceCell>
+                  <PriceCell>Ед.</PriceCell>
+                  <PriceCell>Работа</PriceCell>
+                  <PriceCell>Материал</PriceCell>
+                  <PriceCell $strong>Итого</PriceCell>
+                </PriceRow>
+                {priceItems.map((item) => (
+                  <PriceRow key={`${item.name}-${item.unit}`}>
+                    <PriceCell $name>{item.name}</PriceCell>
+                    <PriceCell data-label="Ед.">{item.unit}</PriceCell>
+                    <PriceCell data-label="Работа">
+                      {formatPrice(item.workPrice)}
+                    </PriceCell>
+                    <PriceCell data-label="Материал">
+                      {formatPrice(item.materialPrice)}
+                    </PriceCell>
+                    <PriceTotal data-label="Итого" $strong>
+                      {formatPrice(item.totalPrice)}
+                    </PriceTotal>
+                  </PriceRow>
+                ))}
+              </PriceTable>
+            </PriceCard>
+            <PriceNote>
+              Цены указаны за единицу позиции из прайс-листа. Позиции, где работа и
+              материал идут отдельными строками, считаются вместе при составлении
+              сметы.
+            </PriceNote>
+          </Container>
+        </PriceSection>
 
         <CalcSection id="calculator">
           <CalcGrid>

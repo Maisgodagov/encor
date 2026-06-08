@@ -190,12 +190,40 @@ const priceItems: PriceItem[] = [
 
 const SHOW_SERVICE_DESCRIPTION = true;
 const initialServicesCount = 8;
+const initialPriceItemsCount = 12;
+
+const popularPriceItemNames = [
+  "Штроба газоблок",
+  "Штроба монолит",
+  "Прокладка кабеля ВВГнг 3х2,5 в штробе или открыто",
+  "Прокладка кабеля ВВГнг 3х1,5 в штробе или открыто",
+  "Монтаж распределительной коробки",
+  "Щит навесной: установка и расключение",
+  "Штробление под щит газоблок",
+  "Штробление под щит бетон",
+  "Заделка штробы",
+  "Монтаж многомодульных установочных коробок в пеноблоке, кирпиче и бетоне",
+  "Кабель ВВГнг 3х2,5",
+  "Кабель ВВГнг 3х1,5",
+];
+
+const popularPriceItems = popularPriceItemNames
+  .map((name) => priceItems.find((item) => item.name === name))
+  .filter((item): item is PriceItem => Boolean(item));
+
+const remainingPriceItems = priceItems.filter(
+  (item) => !popularPriceItemNames.includes(item.name),
+);
 
 const formatPrice = (value?: number) =>
   typeof value === "number" ? `${value.toLocaleString("ru-RU")} ₽` : "—";
 
 const Page = styled.main`
   background: #f1f1f1;
+
+  @media (max-width: 700px) {
+    padding-bottom: 72px;
+  }
 `;
 
 const Container = styled.div`
@@ -680,6 +708,11 @@ const Buttons = styled.div`
   @media (max-width: 800px) {
     margin-top: 4px;
   }
+
+  @media (max-width: 640px) {
+    width: min(180px, 100%);
+    margin-top: 12px;
+  }
 `;
 
 const PrimaryBtn = styled.a`
@@ -705,19 +738,36 @@ const PrimaryBtn = styled.a`
 
   @media (max-width: 640px) {
     width: 100%;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
     justify-content: center;
     text-align: center;
-    font-size: 15px;
-    padding: 12px 16px;
-  }
-
-  @media (max-width: 700px) {
-    display: none;
+    font-size: 12px;
+    padding: 0 12px;
+    margin-top: 0;
+    border-radius: 999px;
   }
 `;
 
 const HeroPrimaryBtn = styled(PrimaryBtn)`
   background: #1f5373;
+`;
+
+const HeroTrust = styled.p`
+  margin-top: 10px;
+  color: #2d3036;
+  font-size: 13px;
+  line-height: 1.3;
+  max-width: 34ch;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.14);
+
+  @media (max-width: 640px) {
+    margin-top: 8px;
+    font-size: 11px;
+    max-width: 30ch;
+    text-shadow: none;
+  }
 `;
 
 const Stats = styled.div`
@@ -1281,6 +1331,55 @@ const PriceNote = styled.p`
   }
 `;
 
+const PriceMore = styled.details`
+  margin-top: 10px;
+
+  &[open] > summary {
+    display: none;
+  }
+`;
+
+const PriceMoreButton = styled.summary`
+  width: fit-content;
+  margin: 14px auto 0;
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #f4f6fa;
+  color: #2d3036;
+  box-shadow: 0 2px 4px rgba(24, 35, 56, 0.035);
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-size: 16px;
+  font-weight: 600;
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+`;
+
+const PriceCta = styled.a`
+  width: fit-content;
+  margin: 16px auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  border-radius: 999px;
+  background: #1f5373;
+  color: #fff;
+  padding: 0 20px;
+  font-size: 15px;
+  font-weight: 800;
+
+  @media (max-width: 640px) {
+    width: 100%;
+  }
+`;
+
 const PortfolioWrap = styled.section`
   padding: 40px 0;
   background: #e5e8ee;
@@ -1398,7 +1497,7 @@ const CalcSection = styled.section`
   overflow: hidden;
 
   @media (max-width: 700px) {
-    order: 4;
+    order: 5;
   }
 `;
 
@@ -1411,11 +1510,25 @@ const CalcGrid = styled(Container)`
 
 const CalcTitle = styled.h2`
   margin-top: 0;
-  margin-bottom: 22px;
+  margin-bottom: 8px;
   color: #1f2d46;
   font-size: clamp(28px, 3.6vw, 40px);
   line-height: 1.08;
   text-align: center;
+`;
+
+const CalcIntro = styled.p`
+  margin: 0 auto 22px;
+  color: #516075;
+  font-size: 16px;
+  line-height: 1.45;
+  text-align: center;
+  max-width: 62ch;
+
+  @media (max-width: 640px) {
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
 `;
 
 const CalcCard = styled.div`
@@ -1448,7 +1561,7 @@ const CalcCard = styled.div`
 
 const CalcBody = styled.div`
   display: grid;
-  grid-template-columns: 1.75fr 1.1fr;
+  grid-template-columns: 1.05fr 1.6fr;
   gap: 16px;
   align-items: stretch;
 
@@ -1466,6 +1579,7 @@ const LeadForm = styled.form`
   border-radius: 12px;
   padding: 14px;
   height: 100%;
+  box-shadow: 0 10px 22px rgba(18, 28, 44, 0.07);
 
   @media (max-width: 640px) {
     padding: 12px;
@@ -1475,6 +1589,24 @@ const LeadForm = styled.form`
     gap: 10px;
     padding: 10px;
   }
+`;
+
+const LeadFormTitle = styled.h3`
+  margin: 0;
+  color: #1f2d46;
+  font-size: 22px;
+  line-height: 1.15;
+
+  @media (max-width: 480px) {
+    font-size: 19px;
+  }
+`;
+
+const LeadFormText = styled.p`
+  margin-top: -4px;
+  color: #66758a;
+  font-size: 13px;
+  line-height: 1.4;
 `;
 
 const LeadField = styled.input`
@@ -1531,10 +1663,77 @@ const LeadPrice = styled.strong<{ $isFallback?: boolean }>`
   color: #1f2d46;
   font-size: ${(props) =>
     props.$isFallback
-      ? "clamp(16px, 1.9vw, 22px)"
+      ? "clamp(17px, 2vw, 23px)"
       : "clamp(24px, 2.8vw, 32px)"};
   line-height: 1;
   letter-spacing: -0.01em;
+`;
+
+const CalculatorAside = styled.div`
+  display: grid;
+  gap: 12px;
+  align-content: start;
+`;
+
+const CalculatorAsideTitle = styled.h3`
+  margin: 0;
+  color: #1f2d46;
+  font-size: 20px;
+  line-height: 1.2;
+`;
+
+const CalculatorAsideText = styled.p`
+  color: #66758a;
+  font-size: 13px;
+  line-height: 1.45;
+`;
+
+const EstimateStepsSection = styled.section`
+  background: #e5e8ee;
+  padding: 24px 0;
+
+  @media (max-width: 700px) {
+    order: 6;
+    padding: 20px 0;
+  }
+`;
+
+const EstimateSteps = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  color: #2d3036;
+  font-size: 14px;
+  line-height: 1.35;
+  font-weight: 700;
+  text-align: center;
+
+  @media (max-width: 760px) {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px 12px;
+    text-align: left;
+  }
+`;
+
+const EstimateStep = styled.div`
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  span {
+    display: inline-grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 999px;
+    background: #1f5373;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    flex: 0 0 auto;
+  }
 `;
 
 const LeadHint = styled.p`
@@ -1706,6 +1905,39 @@ const FooterBottom = styled(Container)`
   text-align: center;
 `;
 
+const MobileStickyCta = styled.div`
+  display: none;
+
+  @media (max-width: 700px) {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 80;
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 8px;
+    padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+    background: rgba(247, 250, 252, 0.94);
+    border-top: 1px solid #d2dce7;
+    box-shadow: 0 -8px 24px rgba(16, 26, 42, 0.14);
+    backdrop-filter: blur(10px);
+  }
+`;
+
+const MobileStickyButton = styled.a<{ $primary?: boolean }>`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  border-radius: 999px;
+  background: ${(props) => (props.$primary ? "#1f5373" : "#e7edf3")};
+  color: ${(props) => (props.$primary ? "#fff" : "#1f5373")};
+  border: 1px solid ${(props) => (props.$primary ? "#1f5373" : "#cbd8e5")};
+  font-size: 14px;
+  font-weight: 800;
+`;
+
 export default function Home() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLeadSent, setIsLeadSent] = useState(false);
@@ -1714,10 +1946,21 @@ export default function Home() {
   const [leadPhone, setLeadPhone] = useState("+7");
   const [leadPhoneError, setLeadPhoneError] = useState("");
   const [leadSubmitError, setLeadSubmitError] = useState("");
+  const [hasTrackedPhoneFocus, setHasTrackedPhoneFocus] = useState(false);
   const [calcState, setCalcState] = useState({
     ready: false,
     resultText: "—",
   });
+
+  const reachGoal = (goal: string) => {
+    window.ym?.(YANDEX_METRIKA_COUNTER_ID, "reachGoal", goal);
+  };
+
+  const leadPriceText =
+    calcState.ready && calcState.resultText
+      ? calcState.resultText
+      : "Рассчитаем после звонка";
+  const isLeadPriceFallback = !calcState.ready || !calcState.resultText;
 
   const normalizePhone = (value: string) => {
     const digits = value.replace(/\D/g, "");
@@ -1731,6 +1974,7 @@ export default function Home() {
 
   const handleLeadSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    reachGoal("lead_submit_attempt");
     setLeadPhoneError("");
     setLeadSubmitError("");
 
@@ -1793,7 +2037,7 @@ export default function Home() {
       setLeadName("");
       setLeadPhone("+7");
       setIsLeadSent(true);
-      window.ym?.(YANDEX_METRIKA_COUNTER_ID, "reachGoal", "lead_submit");
+      reachGoal("lead_submit");
     } catch {
       setLeadSubmitError("Не удалось отправить заявку. Попробуйте еще раз.");
     } finally {
@@ -1822,7 +2066,12 @@ export default function Home() {
             <NavLink href="#contacts">Контакты</NavLink>
           </Nav>
           <HeaderActions>
-            <HeaderPhone href="tel:+79189816434">+7 918 981-64-34</HeaderPhone>
+            <HeaderPhone
+              href="tel:+79189816434"
+              onClick={() => reachGoal("header_phone_click")}
+            >
+              +7 918 981-64-34
+            </HeaderPhone>
             <BurgerButton
               type="button"
               aria-label={isMobileMenuOpen ? "Закрыть меню" : "Открыть меню"}
@@ -1873,7 +2122,12 @@ export default function Home() {
                 Контакты
               </MobileNavLink>
             </MobileNav>
-            <MobilePhone href="tel:+79189816434">+7 918 981-64-34</MobilePhone>
+            <MobilePhone
+              href="tel:+79189816434"
+              onClick={() => reachGoal("mobile_menu_phone_click")}
+            >
+              +7 918 981-64-34
+            </MobilePhone>
           </MobileMenuInner>
         </MobileMenu>
       </Header>
@@ -1900,8 +2154,8 @@ export default function Home() {
             </span>
           </H1>
           <HeroText>
-            Премиальные инженерные решения для квартир, частных домов и
-            новостроек. Проект, монтаж, пуск и гарантийное сопровождение.
+            Электромонтаж под ключ для квартир, домов и новостроек.
+            Рассчитаем смету, подберем решения и согласуем выезд на объект.
           </HeroText>
           <Stats>
             <StatItem>
@@ -1933,10 +2187,16 @@ export default function Home() {
             </StatItem>
           </Stats>
           <Buttons>
-            <HeroPrimaryBtn href="#calculator">
-              Рассчитать стоимость
+            <HeroPrimaryBtn
+              href="#lead-form"
+              onClick={() => reachGoal("hero_lead_click")}
+            >
+              Получить смету
             </HeroPrimaryBtn>
           </Buttons>
+          <HeroTrust>
+            Перезвоним в течение дня · Краснодар · гарантия на работы
+          </HeroTrust>
         </HeroContent>
       </Hero>
 
@@ -1983,7 +2243,7 @@ export default function Home() {
                   <PriceCell>Материал</PriceCell>
                   <PriceCell $strong>Итого</PriceCell>
                 </PriceRow>
-                {priceItems.map((item) => (
+                {popularPriceItems.slice(0, initialPriceItemsCount).map((item) => (
                   <PriceRow key={`${item.name}-${item.unit}`}>
                     <PriceCell $name>{item.name}</PriceCell>
                     <PriceCell data-label="Ед.">{item.unit}</PriceCell>
@@ -2000,6 +2260,45 @@ export default function Home() {
                 ))}
               </PriceTable>
             </PriceCard>
+            {remainingPriceItems.length > 0 && (
+              <PriceMore
+                onToggle={(event) => {
+                  if (event.currentTarget.open) {
+                    reachGoal("price_expand");
+                  }
+                }}
+              >
+                <PriceMoreButton>
+                  <HiOutlineChevronDown />
+                  Показать весь прайс
+                </PriceMoreButton>
+                <PriceCard>
+                  <PriceTable>
+                    {remainingPriceItems.map((item) => (
+                      <PriceRow key={`${item.name}-${item.unit}`}>
+                        <PriceCell $name>{item.name}</PriceCell>
+                        <PriceCell data-label="Ед.">{item.unit}</PriceCell>
+                        <PriceCell data-label="Работа">
+                          {formatPrice(item.workPrice)}
+                        </PriceCell>
+                        <PriceCell data-label="Материал">
+                          {formatPrice(item.materialPrice)}
+                        </PriceCell>
+                        <PriceTotal data-label="Итого" $strong>
+                          {formatPrice(item.totalPrice)}
+                        </PriceTotal>
+                      </PriceRow>
+                    ))}
+                  </PriceTable>
+                </PriceCard>
+              </PriceMore>
+            )}
+            <PriceCta
+              href="#lead-form"
+              onClick={() => reachGoal("price_lead_click")}
+            >
+              Получить точную смету
+            </PriceCta>
             <PriceNote>
               Цены указаны за единицу позиции из прайс-листа. Позиции, где работа и
               материал идут отдельными строками, считаются вместе при составлении
@@ -2015,33 +2314,28 @@ export default function Home() {
               <Bolt $pos="tr" />
               <Bolt $pos="bl" />
               <Bolt $pos="br" />
-              <CalcTitle>Рассчитать стоимость</CalcTitle>
+              <CalcTitle>Оставьте заявку на расчет</CalcTitle>
+              <CalcIntro>
+                Перезвоним, уточним объект и подскажем ориентир по стоимости.
+                Параметры калькулятора можно заполнить по желанию.
+              </CalcIntro>
               <CalcBody>
-                <PriceCalculator
-                  showResult={false}
-                  onStateChange={setCalcState}
-                />
                 <LeadForm id="lead-form" onSubmit={handleLeadSubmit}>
+                  <LeadFormTitle>Получить точную смету</LeadFormTitle>
+                  <LeadFormText>
+                    Достаточно имени и телефона. Детали можно обсудить по звонку.
+                  </LeadFormText>
                   <LeadPriceCard>
                     <LeadPriceLabel>Ориентировочная стоимость</LeadPriceLabel>
                     <LeadPrice
                       $isFallback={
+                        isLeadPriceFallback ||
                         calcState.resultText === "Нужен индивидуальный расчет"
                       }
                     >
-                      {calcState.resultText}
+                      {leadPriceText}
                     </LeadPrice>
                   </LeadPriceCard>
-                  <LeadField
-                    type="text"
-                    placeholder="Ваше имя"
-                    value={leadName}
-                    onChange={(event) => {
-                      setLeadName(event.target.value);
-                      setIsLeadSent(false);
-                      setLeadSubmitError("");
-                    }}
-                  />
                   <LeadField
                     type="tel"
                     placeholder="Номер телефона"
@@ -2052,6 +2346,23 @@ export default function Home() {
                       setIsLeadSent(false);
                       setLeadSubmitError("");
                     }}
+                    onFocus={() => {
+                      if (!hasTrackedPhoneFocus) {
+                        setHasTrackedPhoneFocus(true);
+                        reachGoal("lead_phone_focus");
+                      }
+                    }}
+                  />
+                  <LeadField
+                    type="text"
+                    placeholder="Ваше имя"
+                    value={leadName}
+                    onChange={(event) => {
+                      setLeadName(event.target.value);
+                      setIsLeadSent(false);
+                      setLeadSubmitError("");
+                    }}
+                    onFocus={() => reachGoal("lead_name_focus")}
                   />
                   {leadPhoneError && <LeadError>{leadPhoneError}</LeadError>}
                   {leadSubmitError && <LeadError>{leadSubmitError}</LeadError>}
@@ -2081,10 +2392,44 @@ export default function Home() {
                     </LeadSuccess>
                   )}
                 </LeadForm>
+                <CalculatorAside>
+                  <CalculatorAsideTitle>Быстрый ориентир по объекту</CalculatorAsideTitle>
+                  <CalculatorAsideText>
+                    Если хотите, выберите тип объекта, количество комнат и точек.
+                    Мы получим эти параметры вместе с заявкой.
+                  </CalculatorAsideText>
+                  <PriceCalculator
+                    showResult={false}
+                    onStateChange={setCalcState}
+                  />
+                </CalculatorAside>
               </CalcBody>
             </CalcCard>
           </CalcGrid>
         </CalcSection>
+
+        <EstimateStepsSection>
+          <Container>
+            <EstimateSteps>
+              <EstimateStep>
+                <span>1</span>
+                Оставляете телефон
+              </EstimateStep>
+              <EstimateStep>
+                <span>2</span>
+                Уточняем объект
+              </EstimateStep>
+              <EstimateStep>
+                <span>3</span>
+                Считаем смету
+              </EstimateStep>
+              <EstimateStep>
+                <span>4</span>
+                Согласуем выезд
+              </EstimateStep>
+            </EstimateSteps>
+          </Container>
+        </EstimateStepsSection>
       </ContentFlow>
 
       <PortfolioWrap id="portfolio">
@@ -2168,6 +2513,21 @@ export default function Home() {
           © 2026 Энкор Электромонтаж. Все права защищены.
         </FooterBottom>
       </Footer>
+      <MobileStickyCta>
+        <MobileStickyButton
+          href="tel:+79189816434"
+          onClick={() => reachGoal("sticky_phone_click")}
+        >
+          Позвонить
+        </MobileStickyButton>
+        <MobileStickyButton
+          href="#lead-form"
+          $primary
+          onClick={() => reachGoal("sticky_lead_click")}
+        >
+          Оставить заявку
+        </MobileStickyButton>
+      </MobileStickyCta>
     </Page>
   );
 }

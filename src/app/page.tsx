@@ -192,6 +192,33 @@ const SHOW_SERVICE_DESCRIPTION = true;
 const initialServicesCount = 8;
 const initialPriceItemsCount = 12;
 
+const heroCtaReasons = [
+  "Бесплатный выезд инженера",
+  "Смета за 30 минут",
+  "Проект электрощита в подарок",
+];
+
+const advantages = [
+  "Работа по ГОСТ и ПУЭ",
+  "Качественные материалы",
+  "Собственный инструмент",
+  "Без посредников",
+  "Фотоотчет о работе",
+  "Гарантия 10 лет",
+  "Официальный договор",
+  "Соблюдение сроков",
+];
+
+const workSteps = [
+  "Оставляете заявку",
+  "Бесплатный выезд специалиста",
+  "Составление сметы",
+  "Подписание договора",
+  "Выполнение работ",
+  "Проверка линий и щита",
+  "Сдача объекта",
+];
+
 const popularPriceItemNames = [
   "Штроба газоблок",
   "Штроба монолит",
@@ -463,28 +490,28 @@ const MobilePhone = styled.a`
 
 const Hero = styled.section`
   position: relative;
-  min-height: 620px;
+  min-height: 680px;
   display: flex;
   align-items: center;
   overflow: hidden;
   background: #d8cfd0;
 
   @media (max-width: 940px) {
-    min-height: 500px;
+    min-height: 580px;
   }
 
   @media (max-width: 800px) {
-    min-height: 450px;
+    min-height: 520px;
   }
 
   @media (max-width: 640px) {
-    min-height: 260px;
-    padding: 18px 0 22px;
+    min-height: 430px;
+    padding: 22px 0 24px;
   }
 
   @media (max-width: 480px) {
-    min-height: 245px;
-    padding: 14px 0 20px;
+    min-height: 410px;
+    padding: 18px 0 22px;
   }
 `;
 
@@ -582,17 +609,22 @@ const HeroContent = styled(Container)`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  max-width: 720px;
+  margin-left: calc((100vw - min(1200px, 100%)) / 2);
+  margin-right: auto;
 
   @media (max-width: 940px) {
     padding-top: 12px;
     padding-bottom: 28px;
     padding-left: 22px;
+    max-width: 600px;
   }
 
   @media (max-width: 800px) {
     padding-top: 8px;
     padding-bottom: 18px;
     padding-left: 18px;
+    max-width: 520px;
   }
 
   @media (max-width: 640px) {
@@ -612,33 +644,33 @@ const HeroContent = styled(Container)`
 
 const H1 = styled.h1`
   color: #2d3036;
-  font-size: clamp(38px, 6.6vw, 72px);
-  line-height: 0.98;
-  letter-spacing: -0.02em;
-  max-width: 13ch;
+  font-size: clamp(36px, 4.7vw, 56px);
+  line-height: 1.02;
+  letter-spacing: 0;
+  max-width: 620px;
   text-shadow:
     0 1px 2px rgba(255, 255, 255, 0.22),
     0 8px 18px rgba(108, 102, 95, 0.12);
 
   @media (max-width: 940px) {
-    font-size: clamp(30px, 6vw, 52px);
-    max-width: 11ch;
+    font-size: clamp(31px, 5.4vw, 48px);
+    max-width: 560px;
   }
 
   @media (max-width: 800px) {
-    font-size: clamp(28px, 5.8vw, 44px);
-    max-width: 10ch;
+    font-size: clamp(28px, 5.6vw, 42px);
+    max-width: 480px;
   }
 
   @media (max-width: 640px) {
-    max-width: 10ch;
-    font-size: clamp(26px, 8.6vw, 36px);
+    max-width: 13ch;
+    font-size: clamp(27px, 8.2vw, 38px);
     text-shadow: none;
   }
 
   @media (max-width: 480px) {
-    font-size: clamp(24px, 8.2vw, 32px);
-    max-width: 9ch;
+    font-size: clamp(25px, 7.6vw, 34px);
+    max-width: 13ch;
   }
 `;
 
@@ -647,10 +679,10 @@ const Accent = styled.span`
 `;
 
 const HeroText = styled.p`
-  margin-top: 40px;
-  margin-bottom: 20px;
+  margin-top: 22px;
+  margin-bottom: 18px;
   color: #2d3036;
-  max-width: 52ch;
+  max-width: 56ch;
   line-height: 1.5;
   font-size: 19px;
   text-shadow:
@@ -767,6 +799,41 @@ const HeroTrust = styled.p`
     font-size: 11px;
     max-width: 30ch;
     text-shadow: none;
+  }
+`;
+
+const HeroReasons = styled.div`
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-width: 680px;
+
+  @media (max-width: 640px) {
+    margin-top: 10px;
+    max-width: 260px;
+    gap: 6px;
+  }
+`;
+
+const HeroReason = styled.span`
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  border-radius: 999px;
+  background: rgba(247, 250, 252, 0.84);
+  border: 1px solid rgba(210, 220, 231, 0.9);
+  color: #1f2d46;
+  padding: 0 11px;
+  font-size: 13px;
+  font-weight: 800;
+  box-shadow: 0 6px 14px rgba(18, 28, 44, 0.07);
+
+  @media (max-width: 640px) {
+    min-height: 26px;
+    padding: 0 9px;
+    font-size: 11px;
+    box-shadow: none;
   }
 `;
 
@@ -1174,6 +1241,276 @@ function ServiceItemCard({ item }: ServiceItemCardProps) {
     </ServiceCardItem>
   );
 }
+
+const WhySection = styled(Section)`
+  background: #edf1f6;
+
+  @media (max-width: 700px) {
+    order: 1;
+  }
+`;
+
+const SectionHeader = styled.div`
+  display: grid;
+  gap: 12px;
+  justify-items: center;
+  text-align: center;
+  margin-bottom: 28px;
+
+  @media (max-width: 640px) {
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+`;
+
+const SectionTitle = styled(H2)`
+  text-align: center;
+
+  @media (max-width: 640px) {
+    font-size: 28px;
+    line-height: 1.05;
+  }
+`;
+
+const SectionSubtitle = styled.p`
+  color: #516075;
+  font-size: 17px;
+  line-height: 1.5;
+  max-width: 68ch;
+
+  @media (max-width: 640px) {
+    font-size: 13px;
+    line-height: 1.35;
+  }
+`;
+
+const AdvantageGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+
+  @media (max-width: 980px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: 560px) {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+`;
+
+const AdvantageItem = styled.div`
+  min-height: 86px;
+  border-radius: 14px;
+  border: 1px solid #d4dee9;
+  background: linear-gradient(145deg, #f8fbff 0%, #eef3f8 100%);
+  color: #1f2d46;
+  padding: 16px;
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  line-height: 1.35;
+  font-weight: 800;
+  box-shadow: 0 8px 18px rgba(18, 28, 44, 0.045);
+
+  &::before {
+    content: "";
+    width: 24px;
+    height: 24px;
+    border-radius: 999px;
+    background:
+      linear-gradient(135deg, transparent 49%, #fff 50%) 8px 12px / 5px 2px
+        no-repeat,
+      linear-gradient(45deg, transparent 48%, #fff 50%) 11px 11px / 9px 2px
+        no-repeat,
+      #1f5373;
+  }
+
+  @media (max-width: 640px) {
+    min-height: 58px;
+    padding: 12px;
+    border-radius: 12px;
+    font-size: 14px;
+  }
+`;
+
+const OfferSection = styled(Section)`
+  background: #f1f1f1;
+
+  @media (max-width: 700px) {
+    order: 4;
+  }
+`;
+
+const OfferPanel = styled.div`
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 24px;
+  align-items: center;
+  border-radius: 18px;
+  border: 1px solid #cfd9e5;
+  background: linear-gradient(145deg, #f8fbff 0%, #e7edf3 100%);
+  padding: clamp(22px, 4vw, 36px);
+  box-shadow: 0 14px 30px rgba(18, 28, 44, 0.07);
+
+  @media (max-width: 860px) {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  @media (max-width: 640px) {
+    border-radius: 14px;
+    padding: 18px;
+  }
+`;
+
+const OfferEyebrow = styled.p`
+  width: fit-content;
+  border-radius: 999px;
+  background: #1f5373;
+  color: #fff;
+  padding: 7px 12px;
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+`;
+
+const OfferTitle = styled.h2`
+  margin-top: 16px;
+  color: #1f2d46;
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 1.05;
+`;
+
+const OfferText = styled.p`
+  margin-top: 12px;
+  color: #516075;
+  font-size: 16px;
+  line-height: 1.55;
+  max-width: 58ch;
+
+  @media (max-width: 640px) {
+    font-size: 14px;
+    line-height: 1.45;
+  }
+`;
+
+const OfferList = styled.div`
+  display: grid;
+  gap: 10px;
+`;
+
+const OfferItem = styled.div`
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid #d4dee9;
+  color: #2d3036;
+  padding: 14px 16px;
+  font-size: 15px;
+  line-height: 1.35;
+  font-weight: 800;
+
+  strong {
+    color: #1f5373;
+  }
+
+  @media (max-width: 640px) {
+    padding: 12px;
+    font-size: 14px;
+  }
+`;
+
+const OfferCta = styled.a`
+  width: fit-content;
+  margin-top: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  border-radius: 999px;
+  background: #1f5373;
+  color: #fff;
+  padding: 0 22px;
+  font-size: 15px;
+  font-weight: 800;
+
+  @media (max-width: 640px) {
+    width: 100%;
+  }
+`;
+
+const WorkProcessSection = styled(Section)`
+  background: #f1f1f1;
+
+  @media (max-width: 700px) {
+    order: 6;
+  }
+`;
+
+const WorkProcessGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 10px;
+
+  @media (max-width: 1120px) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  @media (max-width: 760px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+`;
+
+const WorkStepCard = styled.div`
+  min-height: 132px;
+  border-radius: 14px;
+  border: 1px solid #d4dee9;
+  background: linear-gradient(145deg, #f8fbff 0%, #eef3f8 100%);
+  padding: 14px;
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  color: #1f2d46;
+  box-shadow: 0 8px 18px rgba(18, 28, 44, 0.045);
+
+  span {
+    display: inline-grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 999px;
+    background: #1f5373;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 900;
+  }
+
+  p {
+    font-size: 15px;
+    line-height: 1.35;
+    font-weight: 800;
+  }
+
+  @media (max-width: 640px) {
+    min-height: 86px;
+    padding: 12px;
+    grid-template-columns: 30px 1fr;
+    align-items: center;
+
+    p {
+      font-size: 14px;
+    }
+  }
+`;
 
 const PriceSection = styled(Section)`
   background: #e5e8ee;
@@ -1688,54 +2025,6 @@ const CalculatorAsideText = styled.p`
   line-height: 1.45;
 `;
 
-const EstimateStepsSection = styled.section`
-  background: #e5e8ee;
-  padding: 24px 0;
-
-  @media (max-width: 700px) {
-    order: 6;
-    padding: 20px 0;
-  }
-`;
-
-const EstimateSteps = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 18px;
-  color: #2d3036;
-  font-size: 14px;
-  line-height: 1.35;
-  font-weight: 700;
-  text-align: center;
-
-  @media (max-width: 760px) {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 8px 12px;
-    text-align: left;
-  }
-`;
-
-const EstimateStep = styled.div`
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-
-  span {
-    display: inline-grid;
-    place-items: center;
-    width: 24px;
-    height: 24px;
-    border-radius: 999px;
-    background: #1f5373;
-    color: #fff;
-    font-size: 12px;
-    font-weight: 800;
-    flex: 0 0 auto;
-  }
-`;
-
 const LeadHint = styled.p`
   margin-top: 2px;
   color: #6b7a8c;
@@ -1906,22 +2195,34 @@ const FooterBottom = styled(Container)`
 `;
 
 const MobileStickyCta = styled.div`
-  display: none;
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 80;
+  width: min(220px, calc(100vw - 28px));
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 18px;
+  background: rgba(247, 250, 252, 0.94);
+  border: 1px solid #d2dce7;
+  box-shadow: 0 12px 30px rgba(16, 26, 42, 0.18);
+  backdrop-filter: blur(10px);
 
   @media (max-width: 700px) {
-    position: fixed;
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 80;
-    display: grid;
+    width: auto;
     grid-template-columns: 0.9fr 1.1fr;
-    gap: 8px;
     padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
-    background: rgba(247, 250, 252, 0.94);
+    border-radius: 0;
     border-top: 1px solid #d2dce7;
+    border-right: none;
+    border-bottom: none;
+    border-left: none;
     box-shadow: 0 -8px 24px rgba(16, 26, 42, 0.14);
-    backdrop-filter: blur(10px);
   }
 `;
 
@@ -2147,15 +2448,12 @@ export default function Home() {
         </HeroBackgroundFrame>
         <HeroContent>
           <H1>
-            Электромонтаж
-            <br />
-            <span style={{ whiteSpace: "nowrap" }}>
-              в <Accent>Краснодаре</Accent>
-            </span>
+            Электромонтаж квартиры под ключ за 5–10 дней{" "}
+            <Accent>с гарантией 10 лет</Accent>
           </H1>
           <HeroText>
-            Электромонтаж под ключ для квартир, домов и новостроек.
-            Рассчитаем смету, подберем решения и согласуем выезд на объект.
+            Работаем по официальному договору: проектируем линии, собираем щит,
+            прокладываем кабель, подключаем розетки, освещение и теплый пол.
           </HeroText>
           <Stats>
             <StatItem>
@@ -2191,16 +2489,38 @@ export default function Home() {
               href="#lead-form"
               onClick={() => reachGoal("hero_lead_click")}
             >
-              Получить смету
+              Получить смету за 30 минут
             </HeroPrimaryBtn>
           </Buttons>
+          <HeroReasons>
+            {heroCtaReasons.map((item) => (
+              <HeroReason key={item}>{item}</HeroReason>
+            ))}
+          </HeroReasons>
           <HeroTrust>
-            Перезвоним в течение дня · Краснодар · гарантия на работы
+            Бесплатный выезд по Краснодару · официальная смета · договор
           </HeroTrust>
         </HeroContent>
       </Hero>
 
       <ContentFlow>
+        <WhySection id="why">
+          <Container>
+            <SectionHeader>
+              <SectionTitle>Почему выбирают нас</SectionTitle>
+              <SectionSubtitle>
+                Берем электромонтаж под ключ: от расчета нагрузок и проекта до
+                проверки линий, маркировки щита и сдачи объекта.
+              </SectionSubtitle>
+            </SectionHeader>
+            <AdvantageGrid>
+              {advantages.map((item) => (
+                <AdvantageItem key={item}>{item}</AdvantageItem>
+              ))}
+            </AdvantageGrid>
+          </Container>
+        </WhySection>
+
         <ServicesSection id="services">
           <Container>
             <ServicesTitle>Что мы делаем</ServicesTitle>
@@ -2307,6 +2627,41 @@ export default function Home() {
           </Container>
         </PriceSection>
 
+        <OfferSection id="offer">
+          <Container>
+            <OfferPanel>
+              <div>
+                <OfferEyebrow>Специальное предложение</OfferEyebrow>
+                <OfferTitle>
+                  Бесплатный выезд инженера и проект электрощита в подарок
+                </OfferTitle>
+                <OfferText>
+                  Оставьте заявку на этой неделе: специалист приедет на объект,
+                  зафиксирует точки, оценит трассы и подготовит понятную смету
+                  до начала работ.
+                </OfferText>
+                <OfferCta
+                  href="#lead-form"
+                  onClick={() => reachGoal("offer_lead_click")}
+                >
+                  Забронировать выезд
+                </OfferCta>
+              </div>
+              <OfferList>
+                <OfferItem>
+                  <strong>0 ₽</strong> за выезд инженера по Краснодару
+                </OfferItem>
+                <OfferItem>
+                  <strong>30 минут</strong> на первичный расчет после звонка
+                </OfferItem>
+                <OfferItem>
+                  <strong>Подарок</strong> при комплексном электромонтаже под ключ
+                </OfferItem>
+              </OfferList>
+            </OfferPanel>
+          </Container>
+        </OfferSection>
+
         <CalcSection id="calculator">
           <CalcGrid>
             <CalcCard>
@@ -2314,16 +2669,17 @@ export default function Home() {
               <Bolt $pos="tr" />
               <Bolt $pos="bl" />
               <Bolt $pos="br" />
-              <CalcTitle>Оставьте заявку на расчет</CalcTitle>
+              <CalcTitle>Оставьте заявку и получите смету</CalcTitle>
               <CalcIntro>
-                Перезвоним, уточним объект и подскажем ориентир по стоимости.
-                Параметры калькулятора можно заполнить по желанию.
+                Перезвоним, уточним объект, подготовим первичный расчет и
+                согласуем бесплатный выезд инженера.
               </CalcIntro>
               <CalcBody>
                 <LeadForm id="lead-form" onSubmit={handleLeadSubmit}>
-                  <LeadFormTitle>Получить точную смету</LeadFormTitle>
+                  <LeadFormTitle>Смета за 30 минут</LeadFormTitle>
                   <LeadFormText>
-                    Достаточно имени и телефона. Детали можно обсудить по звонку.
+                    Достаточно имени и телефона. При комплексном заказе подготовим
+                    проект электрощита в подарок.
                   </LeadFormText>
                   <LeadPriceCard>
                     <LeadPriceLabel>Ориентировочная стоимость</LeadPriceLabel>
@@ -2367,7 +2723,7 @@ export default function Home() {
                   {leadPhoneError && <LeadError>{leadPhoneError}</LeadError>}
                   {leadSubmitError && <LeadError>{leadSubmitError}</LeadError>}
                   <LeadSubmit type="submit" disabled={isLeadSubmitting}>
-                    {isLeadSubmitting ? "Отправка..." : "Оставить заявку"}
+                    {isLeadSubmitting ? "Отправка..." : "Получить смету"}
                   </LeadSubmit>
                   <LeadHint>
                     <LeadHintIcon>
@@ -2408,28 +2764,25 @@ export default function Home() {
           </CalcGrid>
         </CalcSection>
 
-        <EstimateStepsSection>
+        <WorkProcessSection id="process">
           <Container>
-            <EstimateSteps>
-              <EstimateStep>
-                <span>1</span>
-                Оставляете телефон
-              </EstimateStep>
-              <EstimateStep>
-                <span>2</span>
-                Уточняем объект
-              </EstimateStep>
-              <EstimateStep>
-                <span>3</span>
-                Считаем смету
-              </EstimateStep>
-              <EstimateStep>
-                <span>4</span>
-                Согласуем выезд
-              </EstimateStep>
-            </EstimateSteps>
+            <SectionHeader>
+              <SectionTitle>Как проходит работа</SectionTitle>
+              <SectionSubtitle>
+                Понятный порядок без хаоса на объекте: фиксируем договоренности,
+                ведем работы по этапам и проверяем результат перед сдачей.
+              </SectionSubtitle>
+            </SectionHeader>
+            <WorkProcessGrid>
+              {workSteps.map((item, index) => (
+                <WorkStepCard key={item}>
+                  <span>{index + 1}</span>
+                  <p>{item}</p>
+                </WorkStepCard>
+              ))}
+            </WorkProcessGrid>
           </Container>
-        </EstimateStepsSection>
+        </WorkProcessSection>
       </ContentFlow>
 
       <PortfolioWrap id="portfolio">
